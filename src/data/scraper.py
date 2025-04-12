@@ -446,75 +446,132 @@ if __name__ == "__main__":
     #     logger.error("Không thể tải trang danh sách tin")
 
 
+    # print("Bắt đầu thu thập dữ liệu...")
+
+    # max_pages = 1770            # Số trang muốn thu thập
+    # max_total_cars = 200000000        # Tối đa số lượng xe muốn lấy
+    # all_listings = []
+
+    # # Duyệt qua từng trang
+    # for page in range(1, max_pages + 1):
+    #     page_url = f"{scraper.base_url}/oto/page,{page}"
+    #     logger.info(f"Đang thu thập tin từ trang: {page_url}")
+        
+    #     html = scraper.get_page(page_url)
+    #     if html:
+    #         listings = scraper.parse_listing_page(html)
+    #         logger.info(f"Tìm thấy {len(listings)} tin trên trang {page}")
+    #         all_listings.extend(listings)
+    #     else:
+    #         logger.error(f"Không thể tải trang số {page}")
+        
+    #     # Tạm dừng giữa các trang để tránh bị chặn
+    #     # time.sleep(random.uniform(1, 2))
+        
+    #     # Nếu đã đủ số lượng xe cần thì dừng lại
+    #     if len(all_listings) >= max_total_cars:
+    #         break
+
+    # # Giới hạn số lượng xe (nếu quá nhiều)
+    # all_listings = all_listings[:max_total_cars]
+
+    # logger.info(f"Tổng số xe sẽ lấy chi tiết: {len(all_listings)}")
+
+    # # Lấy thông tin chi tiết từng xe
+    # car_details = []
+    # for i, listing in enumerate(all_listings):
+    #     url = listing['url']
+    #     car_id = listing['car_id']
+    #     logger.info(f"Đang thu thập thông tin xe {i+1}/{len(all_listings)}: {url} (ID: {car_id})")
+
+    #     html = scraper.get_page(url)
+    #     if html:
+    #         car_data = scraper.parse_detail_page(html, car_id)
+    #         if car_data:
+    #             car_details.append(car_data)
+    #             logger.info(f"Đã thu thập thành công dữ liệu cho xe {car_id}")
+
+    #             # In dữ liệu xe để kiểm tra
+    #             print(f"\n--- Dữ liệu xe {i+1} (ID: {car_id}) ---")
+    #             for key, value in car_data.items():
+    #                 print(f"{key}: {value}")
+    #             print("-" * 50)
+        
+    #     # Tạm dừng giữa các request để tránh bị chặn
+    #     # time.sleep(random.uniform(1, 2))
+
+    # # Lưu vào CSV
+    # if car_details:
+    #     output_file = '../../data/raw/bonbanh_data.csv'
+    #     df = pd.DataFrame(car_details)
+    #     df.to_csv(output_file, index=False, encoding='utf-8-sig')
+    #     logger.info(f"Đã lưu {len(car_details)} xe vào {output_file}")
+        
+    #     # Kiểm tra file CSV đã được tạo
+    #     csv_path = os.path.abspath(output_file)
+    #     print(f"\nFile CSV đã được lưu tại: {csv_path}")
+    #     if os.path.exists(csv_path):
+    #         print(f"Kích thước file: {os.path.getsize(csv_path)} bytes")
+    #         print(f"Nội dung file (một vài dòng đầu):")
+    #         print(df.head().to_string())
+    #     else:
+    #         print("CẢNH BÁO: File không được tạo thành công!")
+    # else:
+    #     logger.warning("Không có dữ liệu xe nào được thu thập.")
+
     print("Bắt đầu thu thập dữ liệu...")
 
-    max_pages = 10              # Số trang muốn thu thập
-    max_total_cars = 200       # Tối đa số lượng xe muốn lấy
-    all_listings = []
+    start_page = 1               # Trang bắt đầu
+    end_page = 1770              # Trang kết thúc
+    output_file = '../../data/raw/bonbanh_data.csv'
 
-    # Duyệt qua từng trang
-    for page in range(1, max_pages + 1):
+    # Nếu file tồn tại thì xóa để tránh ghi chồng dữ liệu cũ
+    if os.path.exists(output_file):
+        os.remove(output_file)
+        logger.info("Đã xóa file cũ để chuẩn bị lưu dữ liệu mới.")
+
+    total_saved = 0
+
+    # Ghi header trước
+    header_written = False
+
+    for page in range(start_page, end_page + 1):
         page_url = f"{scraper.base_url}/oto/page,{page}"
         logger.info(f"Đang thu thập tin từ trang: {page_url}")
-        
+
         html = scraper.get_page(page_url)
-        if html:
-            listings = scraper.parse_listing_page(html)
-            logger.info(f"Tìm thấy {len(listings)} tin trên trang {page}")
-            all_listings.extend(listings)
-        else:
+        if not html:
             logger.error(f"Không thể tải trang số {page}")
-        
-        # Tạm dừng giữa các trang để tránh bị chặn
-        time.sleep(random.uniform(1, 2))
-        
-        # Nếu đã đủ số lượng xe cần thì dừng lại
-        if len(all_listings) >= max_total_cars:
-            break
+            continue
 
-    # Giới hạn số lượng xe (nếu quá nhiều)
-    all_listings = all_listings[:max_total_cars]
+        listings = scraper.parse_listing_page(html)
+        logger.info(f"Tìm thấy {len(listings)} tin trên trang {page}")
 
-    logger.info(f"Tổng số xe sẽ lấy chi tiết: {len(all_listings)}")
+        for i, listing in enumerate(listings):
+            url = listing['url']
+            car_id = listing['car_id']
+            logger.info(f"→ Xe {i+1}/{len(listings)} trên trang {page}: {url} (ID: {car_id})")
 
-    # Lấy thông tin chi tiết từng xe
-    car_details = []
-    for i, listing in enumerate(all_listings):
-        url = listing['url']
-        car_id = listing['car_id']
-        logger.info(f"Đang thu thập thông tin xe {i+1}/{len(all_listings)}: {url} (ID: {car_id})")
+            html = scraper.get_page(url)
+            if not html:
+                logger.warning(f"Không thể tải chi tiết xe ID {car_id}")
+                continue
 
-        html = scraper.get_page(url)
-        if html:
             car_data = scraper.parse_detail_page(html, car_id)
             if car_data:
-                car_details.append(car_data)
-                logger.info(f"Đã thu thập thành công dữ liệu cho xe {car_id}")
+                # Ghi luôn vào file CSV
+                df_row = pd.DataFrame([car_data])
+                df_row.to_csv(output_file, mode='a', index=False, encoding='utf-8-sig', header=not header_written)
+                header_written = True
+                total_saved += 1
 
-                # In dữ liệu xe để kiểm tra
-                print(f"\n--- Dữ liệu xe {i+1} (ID: {car_id}) ---")
+                logger.info(f"✔ Đã lưu xe ID {car_id} | Tổng đã lưu: {total_saved}")
+                print(f"\n--- Dữ liệu xe (ID: {car_id}) ---")
                 for key, value in car_data.items():
                     print(f"{key}: {value}")
                 print("-" * 50)
-        
-        # Tạm dừng giữa các request để tránh bị chặn
-        # time.sleep(random.uniform(1, 2))
+            
+            # Tạm dừng nếu cần tránh bị chặn
+            # time.sleep(random.uniform(1, 2))
 
-    # Lưu vào CSV
-    if car_details:
-        output_file = '../../data/raw/bonbanh_data.csv'
-        df = pd.DataFrame(car_details)
-        df.to_csv(output_file, index=False, encoding='utf-8-sig')
-        logger.info(f"Đã lưu {len(car_details)} xe vào {output_file}")
-        
-        # Kiểm tra file CSV đã được tạo
-        csv_path = os.path.abspath(output_file)
-        print(f"\nFile CSV đã được lưu tại: {csv_path}")
-        if os.path.exists(csv_path):
-            print(f"Kích thước file: {os.path.getsize(csv_path)} bytes")
-            print(f"Nội dung file (một vài dòng đầu):")
-            print(df.head().to_string())
-        else:
-            print("CẢNH BÁO: File không được tạo thành công!")
-    else:
-        logger.warning("Không có dữ liệu xe nào được thu thập.")
+    print(f"\n✅ Hoàn tất! Đã lưu tổng cộng {total_saved} xe vào {output_file}")
