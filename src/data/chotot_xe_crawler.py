@@ -11,9 +11,9 @@ from datetime import datetime
 import sys
 
 # Cấu hình crawling (điều chỉnh ở đây)
-START_PAGE = 501  # Trang bắt đầu
+START_PAGE = 1  # Trang bắt đầu
 END_PAGE = 1000    # Trang kết thúc
-CSV_FILE_PATH = "../../data/raw/chotot_xe_data.csv"  # Đường dẫn file CSV
+CSV_FILE_PATH = "../../data/raw/chotot_xe_data1.csv"  # Đường dẫn file CSV
 
 # Thiết lập logging với encoding đúng
 logging.basicConfig(
