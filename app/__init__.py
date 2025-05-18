@@ -1,8 +1,14 @@
 """Main Flask application configuration."""
-from flask import Flask
+from flask import Flask, current_app
 import os
 import logging
 from datetime import datetime
+import joblib
+import numpy as np
+import pickle
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import StandardScaler
 
 def create_app(test_config=None):
     """Create and configure the Flask application."""
@@ -32,6 +38,10 @@ def create_app(test_config=None):
     # Ensure data folders exist
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
+    
+    # Thêm thư mục models để lưu trữ các model dự đoán
+    app.config['MODELS_FOLDER'] = os.path.join(os.getcwd(), '../src/models')
+    os.makedirs(app.config['MODELS_FOLDER'], exist_ok=True)
     
     # Configure logging
     logging_dir = os.path.join(os.getcwd(), 'logs')
@@ -97,4 +107,60 @@ def create_app(test_config=None):
         check_crawler_status()
         app.logger.info("Application initialized")
     
+    # Tạo các file model giả để demo (nếu chưa có)
+    app.logger.info("Checking model files for car price prediction...")
+    
+    model_files = [
+        os.path.join(app.config['MODELS_FOLDER'], 'linear_regression_model.pkl'),
+        os.path.join(app.config['MODELS_FOLDER'], 'random_forest_model.pkl'),
+        os.path.join(app.config['MODELS_FOLDER'], 'xgboost_model.pkl'),
+        os.path.join(app.config['MODELS_FOLDER'], 'scaler_X.pkl'),
+        os.path.join(app.config['MODELS_FOLDER'], 'scaler_y.pkl'),
+        os.path.join(app.config['MODELS_FOLDER'], 'model_columns.pkl')
+    ]
+
+    # Tạo fake models nếu chưa có
+    if not all(os.path.exists(path) for path in model_files):
+        app.logger.info("Creating sample model files for demonstration...")
+        try:
+            # Linear regression model
+            lr = LinearRegression()
+            X_sample = np.array([[2020, 10000, 5], [2021, 5000, 4], [2019, 15000, 7]])
+            y_sample = np.array([500000000, 600000000, 450000000]).reshape(-1, 1)
+            lr.fit(X_sample, y_sample)
+            joblib.dump(lr, model_files[0])
+            
+            # Random forest model
+            rf = RandomForestRegressor(n_estimators=10)
+            rf.fit(X_sample, y_sample.ravel())
+            joblib.dump(rf, model_files[1])
+            
+            # XGBoost model (fake with RandomForest)
+            joblib.dump(rf, model_files[2])
+            
+            # Fake scalers
+            scaler_X = StandardScaler()
+            scaler_X.fit(X_sample)
+            joblib.dump(scaler_X, model_files[3])
+            
+            scaler_y = StandardScaler()
+            scaler_y.fit(y_sample)
+            joblib.dump(scaler_y, model_files[4])
+            
+            # Fake model columns
+            model_columns = ['year', 'mileage', 'seats', 
+                            'brand_Toyota', 'brand_Honda', 'brand_Ford',
+                            'model_Camry', 'model_Civic', 'model_Ranger',
+                            'fuel_type_Xăng', 'fuel_type_Dầu', 
+                            'transmission_Số sàn', 'transmission_Số tự động',
+                            'origin_Trong nước', 'origin_Nhập khẩu',
+                            'car_type_Sedan', 'car_type_SUV', 'car_type_Pickup']
+            joblib.dump(model_columns, model_files[5])
+            
+            app.logger.info("Sample model files created successfully")
+        except Exception as e:
+            app.logger.error(f"Error creating sample models: {e}")
+    else:
+        app.logger.info("Model files already exist, skipping creation")
+        
     return app

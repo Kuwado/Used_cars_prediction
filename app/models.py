@@ -121,3 +121,39 @@ class ProcessingLog(db.Model):
     
     def __repr__(self):
         return f'<ProcessingLog {self.id} - {self.status}>'
+    
+"""Model mới cho CarPrediction - thêm vào cuối file models.py."""
+
+class CarPrediction(db.Model):
+    """Model cho lịch sử dự đoán giá xe."""
+    __tablename__ = 'car_predictions'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    brand = db.Column(db.String(50), nullable=False)
+    model = db.Column(db.String(100), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    mileage = db.Column(db.Integer, nullable=False)
+    fuel_type = db.Column(db.String(50), nullable=False)
+    transmission = db.Column(db.String(50), nullable=False)
+    origin = db.Column(db.String(50), nullable=False)
+    car_type = db.Column(db.String(50), nullable=False)
+    seats = db.Column(db.Integer, nullable=False)
+    
+    predicted_price_lr = db.Column(db.Integer)
+    predicted_price_rf = db.Column(db.Integer)
+    predicted_price_xgb = db.Column(db.Integer)
+    
+    prediction_time = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<CarPrediction {self.id} - {self.brand} {self.model}>'
+    
+class Origin(db.Model):
+    """Model for car origins."""
+    __tablename__ = 'origins'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    
+    def __repr__(self):
+        return f'<Origin {self.name}>'
