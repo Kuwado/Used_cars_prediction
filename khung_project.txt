@@ -63,3 +63,42 @@ car_price_prediction/
 ├── setup.py                   # Script cài đặt
 ├── .gitignore                 # Các file và thư mục bỏ qua
 └── README.md                  # Tài liệu hướng dẫn
+
+
+
+```
+car_price_prediction/
+├── app/
+│   ├── __init__.py
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── style.css
+│   │   └── js/
+│   │       └── main.js
+│   ├── templates/
+│   │   ├── index.html
+│   │   └── results.html
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── crawler.py
+│   │   ├── preprocessor.py
+│   │   └── database.py
+│   ├── config.py
+│   ├── models.py
+│   └── routes.py
+├── data/
+│   ├── raw/
+│   └── processed/
+├── migrations/
+├── logs/
+├── requirements.txt
+├── config.py
+├── run.py
+└── db_init.py
+```
+
+chạy: python db__init.py
+
+chạy cái web crawl: python run.py
+nhớ cài đủ thư viện
+ vào link http://localhost:5000/
