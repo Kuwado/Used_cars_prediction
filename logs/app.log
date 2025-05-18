@@ -19989,3 +19989,25 @@ the current application. To solve this, set up an application context
 with app.app_context(). See the documentation for more information.
 2025-05-18 15:35:56,272 - app.utils.crawler - INFO - Crawl completed! Total cars: 110
 2025-05-18 15:35:56,272 - app.utils.crawler - INFO - CSV file closed
+2025-05-18 15:47:54,875 - app - INFO - Application initialized
+2025-05-18 15:47:54,922 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-18 15:47:54,922 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-18 15:47:54,935 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-18 15:47:56,768 - app - INFO - Application initialized
+2025-05-18 15:47:56,786 - werkzeug - WARNING -  * Debugger is active!
+2025-05-18 15:47:56,795 - werkzeug - INFO -  * Debugger PIN: 733-134-060
+2025-05-18 15:48:03,974 - app.utils.crawler - INFO - Already ran a crawl today, skipping monthly crawl
+2025-05-18 15:48:03,975 - app - INFO - Monthly crawl scheduled on first day of month
+2025-05-18 15:48:03,975 - app - INFO - First request processed
+2025-05-18 15:48:04,015 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:04] "GET / HTTP/1.1" 200 -
+2025-05-18 15:48:04,124 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:04] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-05-18 15:48:04,232 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:04] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-05-18 15:48:04,556 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:04] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-18 15:48:21,919 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:21] "GET /database-info HTTP/1.1" 200 -
+2025-05-18 15:48:22,127 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-18 15:48:26,602 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:26] "GET / HTTP/1.1" 200 -
+2025-05-18 15:48:26,912 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-18 15:48:26,912 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 15:48:26] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
