@@ -13,6 +13,10 @@ import {
   TextField,
   AppBar,
   Toolbar,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 import { CarRental } from "@mui/icons-material";
 import { useState } from "react";
@@ -44,9 +48,49 @@ const hotCars = [
   { name: "Toyota Vios 2018 1.5E MT" },
 ];
 
+const attributes = [
+  { id: 1, label: "Hãng xe", placeholder: "Chọn hãng xe", key: "brand" },
+  { id: 2, label: "Dòng xe", placeholder: "Nhập dòng xe", key: "model" },
+  { id: 3, label: "Đời xe", placeholder: "Nhập đời xe", key: "year" },
+  {
+    id: 4,
+    label: "Công tơ mét",
+    placeholder: "Nhập số km đã đi",
+    key: "mileage",
+  },
+  {
+    id: 5,
+    label: "Loại nhiên liệu",
+    placeholder: "Nhập loại nhiên liệu",
+    key: "fuel_type",
+  },
+  {
+    id: 6,
+    label: "Hộp số",
+    placeholder: "Nhập loại hộp số",
+    key: "transmission",
+  },
+  { id: 7, label: "Xuất xứ", placeholder: "Nhập xuất xứ", key: "origin" },
+  { id: 8, label: "Loại xe", placeholder: "Nhập loại xe", key: "car_type" },
+  {
+    id: 9,
+    label: "Số chỗ ngồi",
+    placeholder: "Nhập số chỗ ngồi",
+    key: "seats",
+  },
+];
+type attributes = {
+  id: number;
+  label: string;
+  placeholder: string;
+  key: string;
+};
+
 export default function HomePage() {
   const [open, setOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedAttribute, setSelectedAttribute] = useState(attributes[0]); // Mặc định chọn thuộc tính đầu tiên
+  const [formData, setFormData] = useState<Record<string, string>>({}); // Lưu dữ liệu các trường
 
   const handleOpenDialog = (brand = "") => {
     setSelectedBrand(brand);
@@ -55,6 +99,14 @@ export default function HomePage() {
 
   const handleCloseDialog = () => {
     setOpen(false);
+  };
+
+  const handleAttributeClick = (attribute: attributes) => {
+    setSelectedAttribute(attribute);
+  };
+
+  const handleInputChange = (e: any) => {
+    setFormData({ ...formData, [selectedAttribute.label]: e.target.value });
   };
 
   return (
@@ -129,30 +181,61 @@ export default function HomePage() {
         </Box>
       </Box>
 
-      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={handleCloseDialog} fullWidth maxWidth="md">
         <DialogTitle>Thông tin xe của bạn</DialogTitle>
         <DialogContent>
-          <Box className="flex flex-col gap-4">
-            <TextField
-              label="Hãng xe"
-              value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
-              fullWidth
-            />
-            <TextField label="Dòng xe" fullWidth />
-            <TextField label="Đời xe" fullWidth />
-            <TextField label="Phiên bản" fullWidth />
-            <TextField label="Màu xe" fullWidth />
-            <TextField label="Công tơ mét" fullWidth />
-            <TextField label="Nhu cầu định giá" fullWidth />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleCloseDialog}
-            >
-              Tiếp theo
-            </Button>
-          </Box>
+          <Grid container spacing={2}>
+            {/* Danh sách thuộc tính */}
+            <Grid item xs={4}>
+              <List>
+                {attributes.map((attribute) => (
+                  <ListItem
+                    key={attribute.id}
+                    button
+                    selected={selectedAttribute.id === attribute.id}
+                    onClick={() => handleAttributeClick(attribute)}
+                    style={{
+                      backgroundColor:
+                        selectedAttribute.id === attribute.id
+                          ? "#f0f0f0"
+                          : "white",
+                    }}
+                  >
+                    <ListItemText primary={attribute.label} />
+                  </ListItem>
+                ))}
+              </List>
+            </Grid>
+
+            {/* Trường nhập liệu */}
+            <Grid item xs={8}>
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  {selectedAttribute.label}
+                </Typography>
+                <TextField
+                  placeholder={selectedAttribute.placeholder}
+                  value={formData[selectedAttribute.key] || ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      [selectedAttribute.key]: e.target.value,
+                    })
+                  }
+                  fullWidth
+                />
+                <Box mt={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCloseDialog}
+                  >
+                    Tiếp theo
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
         </DialogContent>
       </Dialog>
     </Box>
