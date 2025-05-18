@@ -1,7 +1,10 @@
 import pandas as pd
 import os
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-df = pd.read_csv("../../../data/raw/raw.csv")
+# df = pd.read_csv("../../../data/raw/raw.csv")
+df = pd.read_csv("../../../data/raw/chotot_xe_data.csv")
 
 
 # In số dòng và số cột
@@ -138,6 +141,39 @@ print(f"Số bản ghi trùng lặp: {df.duplicated().sum()}")
 print(f"Số bản ghi sau khi tiền xử lý: {df.shape[0]}")
 print(f"Số cột: {df.shape[1]}")
 print(df.columns.tolist())
+
+# Xử lý outlier
+max_price = df["price"].max()
+min_price = df["price"].min()
+
+print(f"Giá trị lớn nhất của price: {max_price:,.0f} VND")  # 20ty
+print(f"Giá trị nhỏ nhất của price: {min_price:,.0f} VND")  # 5tr
+
+# Hiển thị biểu đồ boxplot ban đầu
+# plt.figure(figsize=(10, 4))
+# sns.boxplot(x=df["price"])
+# plt.title("Boxplot trước khi xử lý outlier")
+# plt.show()
+
+
+count = df[df["price"] > 5000000000].shape[0]
+print(f"Số lượng bản ghi có giá > 5 tỷ là: {count}")  # 22
+
+# Xóa bản ghi có giá > 5 ty
+df = df[df["price"] < 5000000000]
+
+filtered_df = df[df["price"] <= 1_000_000_000]
+
+# sns.histplot(data=filtered_df, x="price", bins=50, kde=True)
+# plt.title("Phân bố Price (0 - 1 tỷ)")
+# plt.xlabel("Price")
+# plt.ylabel("Số lượng")
+# plt.show()
+
+count = df[df["price"] < 100000000].shape[0]
+print(f"Số lượng bản ghi có giá < 100 tr là: {count}")  # 532
+df = df[df["price"] > 100000000]
+print(f"Số bản ghi sau khi xử lý outlier: {df.shape[0]}")  # 11523
 
 
 df.to_csv("../../../data/preprocessing/cleaned.csv", index=False)
