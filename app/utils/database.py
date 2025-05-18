@@ -48,7 +48,7 @@ def import_data_to_db(file_path):
     This function extracts unique values from the processed data file and 
     populates the reference tables for web UI dropdowns.
     """
-    from app.models import Brand, Model, CarType, FuelType, Transmission, Year, Seat
+    from app.models import Brand, Model, CarType, FuelType, Transmission, Year, Seat, Origin
     import pandas as pd
     import logging
     
@@ -236,6 +236,9 @@ def import_data_to_db(file_path):
             # Commit after all seat counts are added
             db.session.commit()
         
+        # 8. Import unique origins - NEW ADDITION
+        origin_count = import_origins_from_data(df)
+        
         # Count records in each table
         brand_count = Brand.query.count()
         model_count = Model.query.count()
@@ -253,6 +256,7 @@ def import_data_to_db(file_path):
         logger.info(f"Transmissions: {transmission_count}")
         logger.info(f"Years: {year_count}")
         logger.info(f"Seats: {seat_count}")
+        logger.info(f"Origins: {origin_count}")
         
         return True
         
@@ -260,3 +264,33 @@ def import_data_to_db(file_path):
         logger.error(f"Error importing data: {str(e)}")
         db.session.rollback()
         return False
+def import_origins_from_data(df):
+    """Import unique origins from the processed data file."""
+    from app.models import Origin
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    
+    if 'origin' in df.columns:
+        unique_origins = df['origin'].dropna().unique()
+        logger.info(f"Found {len(unique_origins)} unique origins")
+        
+        for origin_name in unique_origins:
+            # Skip empty strings
+            if not origin_name or pd.isna(origin_name) or str(origin_name).strip() == '':
+                continue
+                
+            # Check if origin already exists
+            existing = Origin.query.filter_by(name=origin_name).first()
+            if not existing:
+                origin = Origin(name=origin_name)
+                db.session.add(origin)
+                logger.info(f"Added origin: {origin_name}")
+        
+        # Commit after all origins are added
+        db.session.commit()
+        
+        # Return count for logging
+        return Origin.query.count()
+    
+    return 0

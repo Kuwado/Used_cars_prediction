@@ -1,65 +1,43 @@
-"""Database initialization script to create tables and populate with initial data."""
+"""Database initialization script to create tables only, without sample data."""
 from flask import Flask
 from app.utils.database import configure_db, db
-from app.models import Brand, Model, CarType, FuelType, Transmission, Year, Seat
 import os
-import csv
+
+# Quan trọng: Import tất cả các models để SQLAlchemy biết cần tạo bảng gì
+from app.models import Brand, Model, CarType, FuelType, Transmission, Year, Seat, CrawlLog, ProcessingLog, CarPrediction, Origin
 
 def create_app():
     """Create a Flask app instance for database initialization."""
     app = Flask(__name__)
-    configure_db(app)
+    
+    # Cấu hình database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///car_price.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Khởi tạo db với app
+    db.init_app(app)
+    
     return app
 
 def init_db():
-    """Initialize the database with tables and initial values."""
+    """Initialize the database with tables only, without sample data."""
     app = create_app()
     
     with app.app_context():
-        # Create all tables
+        # Xóa tất cả bảng cũ nếu có (cẩn thận với dòng này)
+        db.drop_all()
+        
+        # Tạo tất cả bảng mới
         db.create_all()
         
         print("Tables created successfully.")
+        print("Database setup complete! Use import_data_to_db function to import real data from CSV files.")
         
-        # Add initial fuel types
-        fuel_types = ['Xăng', 'Dầu', 'Điện', 'Hybrid', 'Khác']
-        for fuel in fuel_types:
-            if not FuelType.query.filter_by(type=fuel).first():
-                db.session.add(FuelType(type=fuel))
-        
-        # Add initial transmission types
-        transmissions = ['Số sàn', 'Số tự động', 'Số hỗn hợp', 'Khác']
-        for trans in transmissions:
-            if not Transmission.query.filter_by(transmission=trans).first():
-                db.session.add(Transmission(transmission=trans))
-        
-        # Add initial years (2000-2025)
-        for year in range(2000, 2026):
-            if not Year.query.filter_by(year=year).first():
-                db.session.add(Year(year=year))
-        
-        # Add initial seat counts
-        seats = [2, 4, 5, 7, 8, 9, 12, 16]
-        for seat in seats:
-            if not Seat.query.filter_by(seat=seat).first():
-                db.session.add(Seat(seat=seat))
-        
-        # Add some common car brands
-        common_brands = [
-            'Toyota', 'Honda', 'Ford', 'Mazda', 'Kia', 
-            'Hyundai', 'Mercedes-Benz', 'BMW', 'Audi', 'Lexus',
-            'Mitsubishi', 'Nissan', 'Suzuki', 'Volkswagen', 'Chevrolet',
-            'Porsche', 'Land Rover', 'Volvo', 'Subaru', 'Peugeot'
-        ]
-        
-        for brand_name in common_brands:
-            if not Brand.query.filter_by(name=brand_name).first():
-                db.session.add(Brand(name=brand_name))
-        
-        db.session.commit()
-        
-        print("Database initialized with initial data!")
+        # Kiểm tra các bảng đã được tạo
+        from sqlalchemy import inspect
+        inspector = inspect(db.engine)
+        tables = inspector.get_table_names()
+        print(f"Created tables: {tables}")
 
 if __name__ == "__main__":
     init_db()
-    print("Database setup complete!")

@@ -3,12 +3,13 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from app.utils.crawler import run_crawler, get_latest_raw_file, check_stuck_crawlers
 from app.utils.preprocessor import run_preprocessing
 from app.utils.database import db, import_data_to_db
-from app.models import CrawlLog, ProcessingLog, Brand, Model
+from app.models import CrawlLog, ProcessingLog, Brand, Model, Origin
 from datetime import datetime
 import os
 import threading
 import concurrent.futures
 import time
+from app.models import CrawlLog, ProcessingLog, Brand, Model, FuelType, Transmission, Year, Seat, CarType
 
 main_bp = Blueprint('main', __name__)
 
@@ -318,3 +319,263 @@ def database_info():
                            seat_count=seat_count,
                            brands=brands,
                            models=models)
+
+"""Routes bổ sung để hỗ trợ dự đoán giá xe - thêm vào cuối file routes.py."""
+
+import pandas as pd
+import joblib
+import os
+import traceback
+from flask import jsonify, request, render_template, flash
+
+# Đường dẫn tới các mô hình đã được lưu (sẽ điều chỉnh tùy theo cấu trúc project)
+MODEL_DIR = '../../src/models'
+os.makedirs(MODEL_DIR, exist_ok=True)
+
+# Đường dẫn tới các file model
+LR_MODEL_PATH = os.path.join(MODEL_DIR, 'linear_regression_model.pkl')
+RF_MODEL_PATH = os.path.join(MODEL_DIR, 'random_forest_model.pkl')
+XGB_MODEL_PATH = os.path.join(MODEL_DIR, 'xgboost_model.pkl')
+SCALER_X_PATH = os.path.join(MODEL_DIR, 'scaler_X.pkl')
+SCALER_Y_PATH = os.path.join(MODEL_DIR, 'scaler_y.pkl')
+MODEL_COLUMNS_PATH = os.path.join(MODEL_DIR, 'model_columns.pkl')
+
+# API để lấy model dựa vào brand_id
+@main_bp.route('/api/get-models/<int:brand_id>')
+def get_models(brand_id):
+    """API để lấy các model xe dựa vào brand_id."""
+    try:
+        models = Model.query.filter_by(brand_id=brand_id).all()
+        return jsonify({
+            'success': True,
+            'models': [{'id': model.id, 'name': model.name} for model in models]
+        })
+    except Exception as e:
+        current_app.logger.error(f"Error getting models for brand {brand_id}: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+# API để lấy car_types dựa vào model_id
+@main_bp.route('/api/get-car-types/<int:model_id>')
+def get_car_types(model_id):
+    """API để lấy các car_type dựa vào model_id."""
+    try:
+        car_types = CarType.query.filter_by(model_id=model_id).all()
+        return jsonify({
+            'success': True,
+            'car_types': [{'id': car_type.id, 'name': car_type.category} for car_type in car_types]
+        })
+    except Exception as e:
+        current_app.logger.error(f"Error getting car types for model {model_id}: {e}")
+        return jsonify({'success': False, 'error': str(e)})
+
+@main_bp.route('/predict', methods=['GET', 'POST'])
+def predict():
+    """Trang dự đoán giá xe."""
+    # Lấy dữ liệu cho các dropdown
+    brands = Brand.query.order_by(Brand.name).all()
+    fuel_types = FuelType.query.all()
+    transmissions = Transmission.query.all()
+    years = Year.query.order_by(Year.year.desc()).all()
+    seats = Seat.query.order_by(Seat.seat).all()
+    origins = Origin.query.all()  # Thêm origins
+    
+    # Lấy các dự đoán gần đây
+    from app.models import CarPrediction
+    recent_predictions = CarPrediction.query.order_by(CarPrediction.prediction_time.desc()).limit(5).all()
+    
+    if request.method == 'POST':
+        try:
+            # Lấy dữ liệu từ form
+            brand_id = request.form.get('brand')
+            model_id = request.form.get('model')
+            year_id = request.form.get('year')
+            mileage = request.form.get('mileage')
+            fuel_type_id = request.form.get('fuel_type')
+            transmission_id = request.form.get('transmission')
+            origin_id = request.form.get('origin')  # Sửa từ origin thành origin_id
+            car_type_id = request.form.get('car_type')
+            seats_id = request.form.get('seats')
+            
+            # Lấy thông tin chi tiết từ database
+            brand = Brand.query.get(brand_id)
+            model = Model.query.get(model_id)
+            year_obj = Year.query.get(year_id)
+            fuel_type = FuelType.query.get(fuel_type_id)
+            transmission = Transmission.query.get(transmission_id)
+            origin = Origin.query.get(origin_id)  # Lấy object Origin từ database
+            car_type = CarType.query.get(car_type_id)
+            seats_obj = Seat.query.get(seats_id)
+            
+            # Kiểm tra dữ liệu
+            if not all([brand, model, year_obj, fuel_type, transmission, origin, car_type, seats_obj, mileage]):
+                flash('Vui lòng điền đầy đủ thông tin', 'error')
+                return render_template('predict.html',
+                                      brands=brands,
+                                      fuel_types=fuel_types,
+                                      transmissions=transmissions,
+                                      years=years,
+                                      seats=seats,
+                                      origins=origins,  # Thêm origins
+                                      recent_predictions=recent_predictions)
+            
+            # Tạo dữ liệu đầu vào
+            input_data = {
+                "brand": brand.name,
+                "model": model.name,
+                "year": year_obj.year,
+                "mileage": int(mileage),
+                "fuel_type": fuel_type.type,
+                "transmission": transmission.transmission,
+                "origin": origin.name,  # Sử dụng origin.name
+                "car_type": car_type.category,
+                "seats": seats_obj.seat
+            }
+            
+            # Gọi hàm dự đoán
+            prediction_result = predict_price(input_data)
+            if not prediction_result:
+                flash('Không thể dự đoán giá với dữ liệu đã cung cấp. Vui lòng thử lại với dữ liệu khác.', 'error')
+                return render_template('predict.html',
+                                      brands=brands,
+                                      fuel_types=fuel_types,
+                                      transmissions=transmissions,
+                                      years=years,
+                                      seats=seats,
+                                      origins=origins,  # Thêm origins
+                                      recent_predictions=recent_predictions)
+            
+            # Lưu kết quả dự đoán vào database
+            try:
+                new_prediction = CarPrediction(
+                    brand=brand.name,
+                    model=model.name,
+                    year=year_obj.year,
+                    mileage=int(mileage),
+                    fuel_type=fuel_type.type,
+                    transmission=transmission.transmission,
+                    origin=origin.name,  # Sử dụng origin.name
+                    car_type=car_type.category,
+                    seats=seats_obj.seat,
+                    predicted_price_lr=prediction_result['lr'],
+                    predicted_price_rf=prediction_result['rf'],
+                    predicted_price_xgb=prediction_result['xgb']
+                )
+                db.session.add(new_prediction)
+                db.session.commit()
+                
+                # Cập nhật lại danh sách dự đoán gần đây
+                recent_predictions = CarPrediction.query.order_by(CarPrediction.prediction_time.desc()).limit(5).all()
+            except Exception as e:
+                current_app.logger.error(f"Error saving prediction: {e}")
+                # Không cần roll back vì vẫn có thể hiển thị kết quả
+            
+            # Tính giá trung bình
+            prediction_avg = (prediction_result['lr'] + prediction_result['rf'] + prediction_result['xgb']) / 3
+            
+            # Hiển thị kết quả
+            return render_template('predict.html',
+                                  brands=brands,
+                                  fuel_types=fuel_types,
+                                  transmissions=transmissions,
+                                  years=years,
+                                  seats=seats,
+                                  origins=origins,  # Thêm origins
+                                  prediction=prediction_result,
+                                  prediction_avg=prediction_avg,
+                                  brand_name=brand.name,
+                                  model_name=model.name,
+                                  year_value=year_obj.year,
+                                  mileage=mileage,
+                                  fuel_type_name=fuel_type.type,
+                                  transmission_name=transmission.transmission,
+                                  origin=origin.name,  # Sử dụng origin.name
+                                  car_type_name=car_type.category,
+                                  seats_value=seats_obj.seat,
+                                  recent_predictions=recent_predictions)
+                                  
+        except Exception as e:
+            current_app.logger.error(f"Prediction error: {str(e)}")
+            current_app.logger.error(traceback.format_exc())
+            flash(f'Lỗi khi dự đoán giá: {str(e)}', 'error')
+    
+    # Hiển thị form dự đoán
+    return render_template('predict.html',
+                          brands=brands,
+                          fuel_types=fuel_types,
+                          transmissions=transmissions,
+                          years=years,
+                          seats=seats,
+                          origins=origins,  # Thêm origins vào đây
+                          recent_predictions=recent_predictions)
+
+def predict_price(input_data):
+    """
+    Dự đoán giá xe dựa trên input_data bằng cách sử dụng các mô hình đã được huấn luyện.
+    
+    Args:
+        input_data (dict): Thông tin xe cần dự đoán giá (brand, model, year, mileage, v.v.)
+        
+    Returns:
+        dict: Kết quả dự đoán từ các mô hình khác nhau {'lr': value, 'rf': value, 'xgb': value}
+    """
+    import pandas as pd
+    import numpy as np
+    import joblib
+    import os
+    from flask import current_app
+    
+    try:
+        # Đường dẫn tới thư mục chứa các mô hình
+        model_folder = r"C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\models"
+        
+        # Load model columns
+        model_columns = joblib.load(os.path.join(model_folder, 'model_columns.pkl'))
+        
+        # One-hot encode input
+        input_df = pd.DataFrame([input_data])
+        input_encoded = pd.get_dummies(input_df)
+        
+        # Tìm các cột bị thiếu
+        missing_cols = [col for col in model_columns if col not in input_encoded.columns]
+        
+        # Tạo DataFrame các cột thiếu với giá trị 0
+        missing_df = pd.DataFrame(0, index=[0], columns=missing_cols)
+        
+        # Gộp lại để đảm bảo có đủ các cột cần thiết
+        input_encoded = pd.concat([input_encoded, missing_df], axis=1)
+        
+        # Đảm bảo đúng thứ tự cột
+        input_encoded = input_encoded[model_columns]
+        
+        # ------------------ Linear Regression -----------------
+        lr_model = joblib.load(os.path.join(model_folder, 'linear_regression_model.pkl'))
+        scaler_X = joblib.load(os.path.join(model_folder, 'scaler_X.pkl'))
+        scaler_y = joblib.load(os.path.join(model_folder, 'scaler_y.pkl'))
+        
+        # Scale các cột số
+        numeric_cols = ["year", "mileage", "seats"]
+        lr_input = input_encoded.copy()
+        lr_input[numeric_cols] = scaler_X.transform(lr_input[numeric_cols])
+        
+        # Dự đoán với Linear Regression
+        y_pred_scaled = lr_model.predict(lr_input)
+        lf_pred = scaler_y.inverse_transform(y_pred_scaled.reshape(-1, 1))
+        lr_result = int(round(lf_pred[0, 0]))
+        
+        # ------------------- Random Forest ------------------
+        rf_model = joblib.load(os.path.join(model_folder, 'random_forest_model.pkl'))
+        rf_pred = rf_model.predict(input_encoded)
+        rf_result = int(round(rf_pred[0]))
+        
+        # -------------------- XGBoost --------------------
+        xgb_model = joblib.load(os.path.join(model_folder, 'xgboost_model.pkl'))
+        xgb_pred = xgb_model.predict(input_encoded)
+        xgb_result = int(round(xgb_pred[0]))
+        
+        current_app.logger.info(f"Price prediction results - LR: {lr_result}, RF: {rf_result}, XGB: {xgb_result}")
+        
+        return {"lr": lr_result, "rf": rf_result, "xgb": xgb_result}
+        
+    except Exception as e:
+        current_app.logger.error(f"Error in predict_price: {str(e)}")
+        return None
