@@ -6,11 +6,16 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.preprocessing import StandardScaler
 import joblib
 import matplotlib.pyplot as plt
-
+import os
 
 def random_forest_training():
     # Đọc dữ liệu đã one-hot encode
-    df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+    # df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+    # Xác định đường dẫn tuyệt đối tới cleaned.csv
+    cleaned_path = os.path.abspath(os.path.join(os.getcwd(), "data", "preprocessing", "cleaned.csv"))
+
+    # Đọc file
+    df = pd.read_csv(cleaned_path)
 
     # One-hot encoding các cột categorical
     df_encoded = pd.get_dummies(
@@ -25,9 +30,18 @@ def random_forest_training():
         ],
     )
 
+    # joblib.dump(
+    #     df_encoded.drop("price", axis=1).columns.tolist(), "../models/model_columns.pkl"
+    # )
+
+    model_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models'))
+    os.makedirs(model_dir, exist_ok=True)
+
     joblib.dump(
-        df_encoded.drop("price", axis=1).columns.tolist(), "../models/model_columns.pkl"
+        df_encoded.drop("price", axis=1).columns.tolist(),
+        os.path.join(model_dir, "model_columns.pkl")
     )
+
 
     # Tách đặc trưng và target
     X = df_encoded.drop("price", axis=1)
@@ -45,8 +59,10 @@ def random_forest_training():
     rf_model.fit(X_train, y_train)
     print("Training model Random Forest đã hoàn tất")
 
+   
     # Lưu model
-    joblib.dump(rf_model, "../models/random_forest_model.pkl")
+    # joblib.dump(rf_model, "../models/random_forest_model.pkl")
+    joblib.dump(rf_model, os.path.join(model_dir, "random_forest_model.pkl"))
     print("Đã lưu model Random Forest")
 
     # Dự đoán

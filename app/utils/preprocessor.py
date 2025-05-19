@@ -273,6 +273,31 @@ class CarDataPreprocessor:
                 df = df.drop(columns=["condition"])
                 logger.info("Dropped 'condition' column - only has one value")
             
+            # Handle price outliers - THIS SECTION IS ADDED FROM preprocessing.py
+            if "price" in df.columns:
+                # Log initial price range
+                max_price = df["price"].max()
+                min_price = df["price"].min()
+                logger.info(f"Initial price range: {min_price:,.0f} - {max_price:,.0f} VND")
+                
+                # Remove extremely high-priced cars (> 5 billion VND)
+                high_price_count = df[df["price"] > 5000000000].shape[0]
+                if high_price_count > 0:
+                    logger.info(f"Removing {high_price_count} cars with price > 5 billion VND")
+                    df = df[df["price"] < 5000000000]
+                
+                # Remove very low-priced cars (< 100 million VND)
+                low_price_count = df[df["price"] < 100000000].shape[0]
+                if low_price_count > 0:
+                    logger.info(f"Removing {low_price_count} cars with price < 100 million VND")
+                    df = df[df["price"] > 100000000]
+                
+                # Log updated price range
+                if len(df) > 0:
+                    updated_max_price = df["price"].max()
+                    updated_min_price = df["price"].min()
+                    logger.info(f"Updated price range: {updated_min_price:,.0f} - {updated_max_price:,.0f} VND")
+            
             # Final statistics
             logger.info("Final data statistics:")
             logger.info(f"Rows with any null value: {df.isnull().any(axis=1).sum()}")
@@ -304,10 +329,6 @@ class CarDataPreprocessor:
             )
             raise
 
-
-"""
-Sửa đổi phương thức run_preprocessing trong file preprocessor.py
-"""
 
 def run_preprocessing(input_file, log_id=None):
     """Run the preprocessor with the specified input file."""

@@ -7,10 +7,17 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import joblib
-
+import os
 
 def linear_regression_training():
-    df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+    # df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+
+    # Xác định đường dẫn tuyệt đối tới cleaned.csv
+    cleaned_path = os.path.abspath(os.path.join(os.getcwd(), "data", "preprocessing", "cleaned.csv"))
+
+    # Đọc file
+    df = pd.read_csv(cleaned_path)
+
 
     # One-hot encoding
     df_encoded = pd.get_dummies(
@@ -50,10 +57,16 @@ def linear_regression_training():
     lr_model.fit(X_train, y_train)
     print("Training model Linear Regression đã hoàn tất")
 
+    model_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models'))
+    os.makedirs(model_dir, exist_ok=True)
     # Lưu model vào file
-    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
-    joblib.dump(scaler_X, "../models/scaler_X.pkl")
-    joblib.dump(scaler_y, "../models/scaler_y.pkl")
+    # joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+    # joblib.dump(scaler_X, "../models/scaler_X.pkl")
+    # joblib.dump(scaler_y, "../models/scaler_y.pkl")
+    joblib.dump(lr_model, os.path.join(model_dir, "linear_regression_model.pkl"))
+    joblib.dump(scaler_X, os.path.join(model_dir, "scaler_X.pkl"))
+    joblib.dump(scaler_y, os.path.join(model_dir, "scaler_y.pkl"))
+
     print("Đã lưu model Linear Regression")
 
     y_pred_scaled = lr_model.predict(X_test)

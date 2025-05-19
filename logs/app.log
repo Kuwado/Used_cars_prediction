@@ -26127,3 +26127,907 @@ with app.app_context(). See the documentation for more information.
 2025-05-18 23:05:16,505 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 23:05:16] "POST /predict HTTP/1.1" 200 -
 2025-05-18 23:05:16,518 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 23:05:16] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
 2025-05-18 23:05:16,518 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 23:05:16] "[36mGET /static/js/predict.js HTTP/1.1[0m" 304 -
+2025-05-19 14:38:50,538 - app - INFO - Application initialized
+2025-05-19 14:38:50,538 - app - INFO - Checking model files for car price prediction...
+2025-05-19 14:38:50,539 - app - INFO - Model files already exist, skipping creation
+2025-05-19 14:38:50,566 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 14:38:50,566 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 14:38:50,580 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 14:38:53,911 - app - INFO - Application initialized
+2025-05-19 14:38:53,911 - app - INFO - Checking model files for car price prediction...
+2025-05-19 14:38:53,911 - app - INFO - Model files already exist, skipping creation
+2025-05-19 14:38:53,920 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 14:38:53,933 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 14:38:54,691 - app - INFO - First request processed
+2025-05-19 14:38:54,759 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:54] "GET / HTTP/1.1" 200 -
+2025-05-19 14:38:54,859 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 14:38:54,952 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:54] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-05-19 14:38:58,170 - app.utils.preprocessor - INFO - Starting preprocessing with absolute path: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 14:38:58,172 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:58] "[32mPOST /preprocess HTTP/1.1[0m" 302 -
+2025-05-19 14:38:58,172 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 14:38:58,197 - app.utils.preprocessor - INFO - Updated processing log 2
+2025-05-19 14:38:58,198 - app.utils.preprocessor - INFO - Updated processing log 2
+2025-05-19 14:38:58,199 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 14:38:58,200 - app.utils.preprocessor - INFO - First 5 lines of input file:
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Line 1: id,title,brand,model,year,price,mileage,fuel_type,transmission,owners,origin,car_type,seats,doors,version,condition,location,post_time,crawl_time,drivetrain,engine_type,horse_power,torque,engine_capacity,fuel_consumption,air_bags,ground_clearance,weight,load_capacity
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Line 2: \u1ecf,Mercedes Benz E Class 2010 E250 - 80000 km,Mercedes Benz,E Class,2010,320000000,80000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,,Vi\u1ec7t Nam,Sedan,5,,,\u0110ã s\u1eed d\u1ee5ng,"Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng",\u0110\u0103ng 1 phút tr\u01b0\u1edbc,2025-05-13 12:45:11,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Line 3: 124407149,Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM,Kia,Sedona,2020,845000000,85689,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,--,,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i",\u0110\u0103ng 2 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Line 4: 121332884,Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch,Kia,Sorento,2016,455000000,100000,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i",\u0110\u0103ng 1 tháng tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Line 5: 124296461,Hyundai Santa Fe 2013 2.4L 4WD - 107000 km,Hyundai,Santa Fe,2013,485000000,107000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,1,Hàn Qu\u1ed1c,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh",\u0110\u0103ng 9 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 14:38:58,201 - app.utils.preprocessor - INFO - Loading data from C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 14:38:58,212 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:58] "GET / HTTP/1.1" 200 -
+2025-05-19 14:38:58,420 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:58] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 14:38:58,453 - app.utils.preprocessor - INFO - First 5 rows of DataFrame:
+2025-05-19 14:38:58,455 - app.utils.preprocessor - INFO - Row 0: {'id': '\u1ecf', 'title': 'Mercedes Benz E Class 2010 E250 - 80000 km', 'brand': 'Mercedes Benz', 'model': 'E Class', 'year': 2010.0, 'price': 320000000, 'mileage': 80000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Vi\u1ec7t Nam', 'car_type': 'Sedan', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng', 'post_time': '\u0110\u0103ng 1 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:11', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 14:38:58,457 - app.utils.preprocessor - INFO - Row 1: {'id': '124407149', 'title': 'Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM', 'brand': 'Kia', 'model': 'Sedona', 'year': 2020.0, 'price': 845000000, 'mileage': 85689.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': '--', 'seats': nan, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 2 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 14:38:58,458 - app.utils.preprocessor - INFO - Row 2: {'id': '121332884', 'title': 'Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch', 'brand': 'Kia', 'model': 'Sorento', 'year': 2016.0, 'price': 455000000, 'mileage': 100000.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 1 tháng tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 14:38:58,458 - app.utils.preprocessor - INFO - Row 3: {'id': '124296461', 'title': 'Hyundai Santa Fe 2013 2.4L 4WD - 107000 km', 'brand': 'Hyundai', 'model': 'Santa Fe', 'year': 2013.0, 'price': 485000000, 'mileage': 107000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': 1.0, 'origin': 'Hàn Qu\u1ed1c', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 9 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 14:38:58,458 - app.utils.preprocessor - INFO - Row 4: {'id': '124942994', 'title': 'HONDA HRV G 2024 - S\u01a1n ZIN - Odo 3.700km - M\u1edaI KEN', 'brand': 'Honda', 'model': 'HR-V', 'year': 2024.0, 'price': 690000000, 'mileage': 3700.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Thái Lan', 'car_type': 'SUV / Cross over', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng Tân Phong, Qu\u1eadn 7, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 4 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:13', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 14:38:58,458 - app.utils.preprocessor - INFO - Initial data: 19870 rows, 29 columns
+2025-05-19 14:38:58,459 - app.utils.preprocessor - INFO - DataFrame columns: ['id', 'title', 'brand', 'model', 'year', 'price', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'doors', 'version', 'condition', 'location', 'post_time', 'crawl_time', 'drivetrain', 'engine_type', 'horse_power', 'torque', 'engine_capacity', 'fuel_consumption', 'air_bags', 'ground_clearance', 'weight', 'load_capacity']
+2025-05-19 14:38:58,471 - app.utils.preprocessor - INFO - Data after column selection: 19870 rows, 12 columns
+2025-05-19 14:38:58,471 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'condition', 'price']
+2025-05-19 14:38:58,471 - app.utils.preprocessor - INFO - Missing values count:
+2025-05-19 14:38:58,474 - app.utils.preprocessor - INFO -   brand: 0
+2025-05-19 14:38:58,475 - app.utils.preprocessor - INFO -   model: 0
+2025-05-19 14:38:58,475 - app.utils.preprocessor - INFO -   year: 20
+2025-05-19 14:38:58,476 - app.utils.preprocessor - INFO -   mileage: 1774
+2025-05-19 14:38:58,477 - app.utils.preprocessor - INFO -   fuel_type: 0
+2025-05-19 14:38:58,478 - app.utils.preprocessor - INFO -   transmission: 0
+2025-05-19 14:38:58,478 - app.utils.preprocessor - INFO -   owners: 11080
+2025-05-19 14:38:58,480 - app.utils.preprocessor - INFO -   origin: 0
+2025-05-19 14:38:58,482 - app.utils.preprocessor - INFO -   car_type: 0
+2025-05-19 14:38:58,482 - app.utils.preprocessor - INFO -   seats: 2129
+2025-05-19 14:38:58,483 - app.utils.preprocessor - INFO -   condition: 0
+2025-05-19 14:38:58,483 - app.utils.preprocessor - INFO -   price: 0
+2025-05-19 14:38:58,488 - app.utils.preprocessor - INFO - Filtered by year >= 2000: Removed 263 rows
+2025-05-19 14:38:58,493 - app.utils.preprocessor - INFO - Filtered origin != '\u0110ang c\u1eadp nh\u1eadt': Removed 2104 rows
+2025-05-19 14:38:58,498 - app.utils.preprocessor - INFO - Filtered car_type != '--': Removed 1868 rows
+2025-05-19 14:38:58,501 - app.utils.preprocessor - INFO - Dropped 'owners' column
+2025-05-19 14:38:58,506 - app.utils.preprocessor - INFO - Rows with at least one null value: 1883
+2025-05-19 14:38:58,513 - app.utils.preprocessor - INFO - After dropping null rows: 13752 rows left
+2025-05-19 14:38:58,523 - app.utils.preprocessor - INFO - Duplicate rows: 1010
+2025-05-19 14:38:58,534 - app.utils.preprocessor - INFO - After dropping duplicates: 12742 rows left
+2025-05-19 14:38:58,538 - app.utils.preprocessor - INFO - Filtered brand with few samples: Removed 99 rows
+2025-05-19 14:38:58,543 - app.utils.preprocessor - INFO - Filtered model with few samples: Removed 534 rows
+2025-05-19 14:38:58,547 - app.utils.preprocessor - INFO - Filtered transmission with few samples: Removed 5 rows
+2025-05-19 14:38:58,555 - app.utils.preprocessor - INFO - Filtered car_type with few samples: Removed 7 rows
+2025-05-19 14:38:58,556 - app.utils.preprocessor - INFO - After iteration 1: 12097 rows left
+2025-05-19 14:38:58,561 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:38:58] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 14:38:58,574 - app.utils.preprocessor - INFO - After iteration 2: 12097 rows left
+2025-05-19 14:38:58,578 - app.utils.preprocessor - INFO - Dropped 'condition' column - only has one value
+2025-05-19 14:38:58,579 - app.utils.preprocessor - INFO - Final data statistics:
+2025-05-19 14:38:58,582 - app.utils.preprocessor - INFO - Rows with any null value: 0
+2025-05-19 14:38:58,590 - app.utils.preprocessor - INFO - Duplicate rows: 0
+2025-05-19 14:38:58,591 - app.utils.preprocessor - INFO - Final data: 12097 rows, 10 columns
+2025-05-19 14:38:58,591 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'origin', 'car_type', 'seats', 'price']
+2025-05-19 14:38:58,656 - app.utils.preprocessor - INFO - Preprocessed data saved to data\processed\processed_cars_20250519_143858.csv
+2025-05-19 14:38:58,665 - app.utils.preprocessor - INFO - Updated processing log 2
+2025-05-19 14:38:58,666 - app.utils.preprocessor - INFO - Preprocessing completed with result: True
+2025-05-19 14:39:03,516 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:39:03] "GET /logs HTTP/1.1" 200 -
+2025-05-19 14:39:03,740 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:39:03] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 14:39:03,771 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 14:39:03] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 14:40:39,150 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\training.py', reloading
+2025-05-19 14:40:39,981 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 14:40:44,109 - app - INFO - Application initialized
+2025-05-19 14:40:44,109 - app - INFO - Checking model files for car price prediction...
+2025-05-19 14:40:44,109 - app - INFO - Model files already exist, skipping creation
+2025-05-19 14:40:44,120 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 14:40:44,131 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 14:41:40,393 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\utils\\database.py', reloading
+2025-05-19 14:41:42,110 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 14:41:45,907 - app - INFO - Application initialized
+2025-05-19 14:41:45,907 - app - INFO - Checking model files for car price prediction...
+2025-05-19 14:41:45,907 - app - INFO - Model files already exist, skipping creation
+2025-05-19 14:41:45,917 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 14:41:45,931 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 14:41:47,022 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\shutil.py', reloading
+2025-05-19 14:41:47,664 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 14:41:47,665 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 14:41:47,666 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 14:41:48,338 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:12:35,002 - app - INFO - Application initialized
+2025-05-19 15:12:35,003 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:12:35,003 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:12:35,032 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:12:35,032 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:12:35,051 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:12:38,445 - app - INFO - Application initialized
+2025-05-19 15:12:38,445 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:12:38,445 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:12:38,457 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:12:38,471 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:13:00,150 - app - INFO - First request processed
+2025-05-19 15:13:00,298 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:00] "GET / HTTP/1.1" 200 -
+2025-05-19 15:13:00,517 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:13:00,668 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:00] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:13:03,843 - app - INFO - Th\u01b0 m\u1ee5c hi\u1ec7n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction
+2025-05-19 15:13:03,844 - app - INFO - Th\u01b0 m\u1ee5c d\u1ef1 án \u0111\u01b0\u1ee3c phát hi\u1ec7n: C:\Users\admin\Documents\GitHub\Used_cars_prediction
+2025-05-19 15:13:03,845 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data
+2025-05-19 15:13:03,846 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed
+2025-05-19 15:13:03,846 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing
+2025-05-19 15:13:03,846 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\src
+2025-05-19 15:13:03,847 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training
+2025-05-19 15:13:03,847 - app - INFO - \u0110\u1ea3m b\u1ea3o th\u01b0 m\u1ee5c t\u1ed3n t\u1ea1i: C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\models
+2025-05-19 15:13:03,847 - app - INFO - B\u1eaft \u0111\u1ea7u quá trình \u0111ào t\u1ea1o mô hình
+2025-05-19 15:13:03,850 - app - INFO - File processed m\u1edbi nh\u1ea5t: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:13:03,857 - app - INFO - \u0110ã sao chép C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned.csv
+2025-05-19 15:13:03,860 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:03] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:13:03,898 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:03] "GET / HTTP/1.1" 200 -
+2025-05-19 15:13:03,902 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\werkzeug\\local.py', reloading
+2025-05-19 15:13:04,100 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:13:04,247 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:13:04] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:13:05,261 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:13:08,700 - app - INFO - Application initialized
+2025-05-19 15:13:08,701 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:13:08,701 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:13:08,710 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:13:08,724 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:14:57,573 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:14:57,580 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:14:57,581 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:14:58,924 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:15:07,099 - app - INFO - Application initialized
+2025-05-19 15:15:07,099 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:15:07,099 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:15:07,121 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:15:07,122 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:15:07,134 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:15:10,012 - app - INFO - Application initialized
+2025-05-19 15:15:10,013 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:15:10,013 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:15:10,026 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:15:10,042 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:17:51,646 - app - INFO - First request processed
+2025-05-19 15:17:51,746 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:17:51] "GET / HTTP/1.1" 200 -
+2025-05-19 15:17:51,796 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:17:51] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-05-19 15:17:51,991 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:17:51] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:17:52,115 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:17:52] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-05-19 15:20:01,391 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:20:01,393 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:20:01,394 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\routes.py', reloading
+2025-05-19 15:20:03,341 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:20:08,016 - app - INFO - Application initialized
+2025-05-19 15:20:08,017 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:20:08,017 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:20:08,028 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:20:08,039 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:20:25,311 - app - INFO - First request processed
+2025-05-19 15:20:25,319 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_152025.csv
+2025-05-19 15:20:25,326 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:20:25,330 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:20:25] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:20:25,399 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:20:25] "GET / HTTP/1.1" 200 -
+2025-05-19 15:20:25,691 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:20:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:20:25,768 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:20:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:20:25,771 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:20:25] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-05-19 15:20:26,641 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:20:27,246 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+2025-05-19 15:20:27,289 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 648, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Linear Regression..."); lr.linear_regression_training()
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\linear_regression.py", line 61, in linear_regression_training
+    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+
+2025-05-19 15:20:27,292 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\joblib\\numpy_pickle.py', reloading
+2025-05-19 15:20:28,837 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:20:33,042 - app - INFO - Application initialized
+2025-05-19 15:20:33,042 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:20:33,042 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:20:33,051 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:20:33,062 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:22:49,223 - app - INFO - First request processed
+2025-05-19 15:22:49,231 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_152249.csv
+2025-05-19 15:22:49,237 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:22:49,241 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:22:49] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:22:49,308 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:22:49] "GET / HTTP/1.1" 200 -
+2025-05-19 15:22:49,608 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:22:49] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:22:49,682 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:22:49] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-05-19 15:22:49,688 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:22:49] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:22:50,294 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:22:50,947 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+2025-05-19 15:22:50,952 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 648, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Linear Regression..."); lr.linear_regression_training()
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\linear_regression.py", line 61, in linear_regression_training
+    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+
+2025-05-19 15:24:56,548 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\importlib\\__init__.py', reloading
+2025-05-19 15:24:57,998 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:25:01,352 - app - INFO - Application initialized
+2025-05-19 15:25:01,352 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:25:01,352 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:25:01,364 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:25:01,378 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:27:03,873 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\linear_regression.py', reloading
+2025-05-19 15:27:03,875 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\linear_regression.py', reloading
+2025-05-19 15:27:05,331 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:27:09,509 - app - INFO - Application initialized
+2025-05-19 15:27:09,509 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:27:09,509 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:27:09,520 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:27:09,537 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:27:24,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:27:24,529 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:27:24,531 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:27:25,015 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:27:29,471 - app - INFO - Application initialized
+2025-05-19 15:27:29,471 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:27:29,471 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:27:29,483 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:27:29,497 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:27:41,852 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:27:41,852 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:27:41,858 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:27:43,087 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:27:52,175 - app - INFO - Application initialized
+2025-05-19 15:27:52,175 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:27:52,176 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:27:52,211 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:27:52,211 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:27:52,224 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:27:55,655 - app - INFO - Application initialized
+2025-05-19 15:27:55,655 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:27:55,655 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:27:55,664 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:27:55,676 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:28:18,250 - app - INFO - First request processed
+2025-05-19 15:28:18,255 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_152818.csv
+2025-05-19 15:28:18,261 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:28:18,265 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:28:18] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:28:18,390 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:28:18] "GET / HTTP/1.1" 200 -
+2025-05-19 15:28:18,620 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:28:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:28:18,733 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:28:18] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:28:19,264 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:28:19,894 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+2025-05-19 15:28:19,900 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 648, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Linear Regression..."); lr.linear_regression_training()
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\linear_regression.py", line 63, in linear_regression_training
+    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+
+2025-05-19 15:29:18,554 - app - INFO - Application initialized
+2025-05-19 15:29:18,554 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:29:18,554 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:29:18,580 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:29:18,580 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:29:18,607 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:29:21,802 - app - INFO - Application initialized
+2025-05-19 15:29:21,802 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:29:21,802 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:29:21,813 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:29:21,827 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:29:22,548 - app - INFO - First request processed
+2025-05-19 15:29:22,553 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_152922.csv
+2025-05-19 15:29:22,557 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:29:22,560 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:29:22] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:29:22,606 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:29:22] "GET / HTTP/1.1" 200 -
+2025-05-19 15:29:22,916 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:29:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:29:22,935 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:29:22] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:29:23,330 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:29:23,784 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+2025-05-19 15:29:23,786 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 648, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Linear Regression..."); lr.linear_regression_training()
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\linear_regression.py", line 63, in linear_regression_training
+    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+
+2025-05-19 15:29:53,335 - app - INFO - Application initialized
+2025-05-19 15:29:53,336 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:29:53,336 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:29:53,365 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:29:53,365 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:29:53,378 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:29:56,872 - app - INFO - Application initialized
+2025-05-19 15:29:56,873 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:29:56,873 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:29:56,885 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:29:56,899 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:30:06,564 - app - INFO - First request processed
+2025-05-19 15:30:06,610 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:06] "GET / HTTP/1.1" 200 -
+2025-05-19 15:30:06,644 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:06] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-05-19 15:30:06,890 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:30:06,950 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:06] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:30:09,429 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_153009.csv
+2025-05-19 15:30:09,435 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:30:09,437 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:09] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:30:09,454 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:09] "GET / HTTP/1.1" 200 -
+2025-05-19 15:30:09,698 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:09] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:30:09,858 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:09] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:30:09,860 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:30:09] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2025-05-19 15:30:10,416 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:30:10,908 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+2025-05-19 15:30:10,912 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 648, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Linear Regression..."); lr.linear_regression_training()
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\linear_regression.py", line 63, in linear_regression_training
+    joblib.dump(lr_model, "../models/linear_regression_model.pkl")
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/linear_regression_model.pkl'
+
+2025-05-19 15:32:09,975 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\linear_regression.py', reloading
+2025-05-19 15:32:09,975 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\linear_regression.py', reloading
+2025-05-19 15:32:09,977 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\linear_regression.py', reloading
+2025-05-19 15:32:11,316 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:32:19,606 - app - INFO - Application initialized
+2025-05-19 15:32:19,607 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:32:19,607 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:32:19,636 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:32:19,637 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:32:19,647 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:32:22,779 - app - INFO - Application initialized
+2025-05-19 15:32:22,780 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:32:22,780 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:32:22,788 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:32:22,800 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:32:31,096 - app - INFO - First request processed
+2025-05-19 15:32:31,104 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_153231.csv
+2025-05-19 15:32:31,109 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:32:31,111 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:32:31] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:32:31,171 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:32:31] "GET / HTTP/1.1" 200 -
+2025-05-19 15:32:31,457 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:32:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:32:31,505 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:32:31] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:32:31,938 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:32:32,442 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 15:32:32,484 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/model_columns.pkl'
+2025-05-19 15:32:32,487 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 649, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Random Forest..."); rf.random_forest_training()
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\random_forest.py", line 33, in random_forest_training
+    joblib.dump(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/model_columns.pkl'
+
+2025-05-19 15:34:22,592 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:34:22,594 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:34:22,601 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\xgboost_train.py', reloading
+2025-05-19 15:34:24,090 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:34:28,133 - app - INFO - Application initialized
+2025-05-19 15:34:28,133 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:34:28,133 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:34:28,144 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:34:28,154 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:34:32,313 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:34:32,313 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:34:32,320 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:34:33,823 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:35:06,080 - app - INFO - Application initialized
+2025-05-19 15:35:06,081 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:35:06,081 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:35:06,111 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:35:06,111 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:35:06,123 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:35:09,307 - app - INFO - Application initialized
+2025-05-19 15:35:09,307 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:35:09,307 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:35:09,317 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:35:09,331 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:35:09,819 - app - INFO - First request processed
+2025-05-19 15:35:09,823 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_153509.csv
+2025-05-19 15:35:09,834 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:35:09,836 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:35:09] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:35:09,883 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:35:09] "GET / HTTP/1.1" 200 -
+2025-05-19 15:35:10,188 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:35:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:35:10,218 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:35:10] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:35:10,641 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:35:11,638 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 15:35:11,676 - app - ERROR - \u274c L\u1ed7i khi \u0111ào t\u1ea1o mô hình: [Errno 2] No such file or directory: '../models/model_columns.pkl'
+2025-05-19 15:35:11,679 - app - ERROR - Traceback (most recent call last):
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\app\routes.py", line 649, in run_training
+    app.logger.info("\u0110ào t\u1ea1o Random Forest..."); rf.random_forest_training()
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\training\random_forest.py", line 33, in random_forest_training
+    joblib.dump(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python312\Lib\site-packages\joblib\numpy_pickle.py", line 552, in dump
+    with open(filename, 'wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '../models/model_columns.pkl'
+
+2025-05-19 15:37:23,228 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:37:23,229 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:37:23,229 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:37:24,753 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:37:28,791 - app - INFO - Application initialized
+2025-05-19 15:37:28,791 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:37:28,792 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:37:28,802 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:37:28,818 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:37:53,100 - app - INFO - Application initialized
+2025-05-19 15:37:53,100 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:37:53,100 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:37:53,122 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:37:53,122 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:37:53,137 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:37:56,109 - app - INFO - Application initialized
+2025-05-19 15:37:56,109 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:37:56,109 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:37:56,120 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:37:56,132 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:38:05,136 - app - INFO - First request processed
+2025-05-19 15:38:05,143 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_153805.csv
+2025-05-19 15:38:05,150 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:38:05,154 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:38:05] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:38:05,233 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:38:05] "GET / HTTP/1.1" 200 -
+2025-05-19 15:38:05,564 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:38:05] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:38:05,695 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:38:05] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:38:06,319 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:38:06,863 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 15:38:13,474 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\__init__.py', reloading
+2025-05-19 15:38:14,727 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:38:17,491 - app - INFO - Application initialized
+2025-05-19 15:38:17,491 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:38:17,491 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:38:17,501 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:38:17,512 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:39:05,815 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\utils\\crawler.py', reloading
+2025-05-19 15:39:05,817 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\training.py', reloading
+2025-05-19 15:39:05,834 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\crawl\\chotot_xe_crawler.py', reloading
+2025-05-19 15:39:05,835 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\crawl\\scraper.py', reloading
+2025-05-19 15:39:05,838 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\preprocessing\\preprocessing.py', reloading
+2025-05-19 15:39:05,839 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\visualize\\visualize.py', reloading
+2025-05-19 15:39:05,842 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\models\\use_models.py', reloading
+2025-05-19 15:39:05,904 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\__init__.py', reloading
+2025-05-19 15:39:05,907 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\__init__.py', reloading
+2025-05-19 15:39:05,909 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\json\\__init__.py', reloading
+2025-05-19 15:39:05,912 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\app.py', reloading
+2025-05-19 15:39:05,913 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\blueprints.py', reloading
+2025-05-19 15:39:05,914 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\config.py', reloading
+2025-05-19 15:39:05,915 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\ctx.py', reloading
+2025-05-19 15:39:05,917 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\globals.py', reloading
+2025-05-19 15:39:05,918 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\helpers.py', reloading
+2025-05-19 15:39:05,919 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\templating.py', reloading
+2025-05-19 15:39:05,919 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\__init__.py', reloading
+2025-05-19 15:39:05,921 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\__init__.py', reloading
+2025-05-19 15:39:05,921 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\typing.py', reloading
+2025-05-19 15:39:05,923 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\app.py', reloading
+2025-05-19 15:39:05,924 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\scaffold.py', reloading
+2025-05-19 15:39:05,928 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\sansio\\response.py', reloading
+2025-05-19 15:39:05,930 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\utils.py', reloading
+2025-05-19 15:39:05,931 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\blueprints.py', reloading
+2025-05-19 15:39:05,932 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\response.py', reloading
+2025-05-19 15:39:05,942 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\headers.py', reloading
+2025-05-19 15:39:05,949 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pickle.py', reloading
+2025-05-19 15:39:05,954 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\warnings.py', reloading
+2025-05-19 15:39:05,955 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\typing\\__init__.py', reloading
+2025-05-19 15:39:05,965 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\__init__.py', reloading
+2025-05-19 15:39:05,967 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_nested_sequence.py', reloading
+2025-05-19 15:39:05,968 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_nbit_base.py', reloading
+2025-05-19 15:39:05,968 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_shape.py', reloading
+2025-05-19 15:39:05,969 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_array_like.py', reloading
+2025-05-19 15:39:05,983 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\pandas\\core\\reshape\\encoding.py', reloading
+2025-05-19 15:39:05,983 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\importlib\\util.py', reloading
+2025-05-19 15:39:05,985 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\pandas\\__init__.py', reloading
+2025-05-19 15:39:05,988 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\wrappers.py', reloading
+2025-05-19 15:39:05,990 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\__init__.py', reloading
+2025-05-19 15:39:05,991 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_base.py', reloading
+2025-05-19 15:39:05,992 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_csr.py', reloading
+2025-05-19 15:39:05,993 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_csc.py', reloading
+2025-05-19 15:39:05,994 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_lil.py', reloading
+2025-05-19 15:39:05,995 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_dok.py', reloading
+2025-05-19 15:39:05,995 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\jinja2\\__init__.py', reloading
+2025-05-19 15:39:05,996 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_coo.py', reloading
+2025-05-19 15:39:05,997 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_dia.py', reloading
+2025-05-19 15:39:05,998 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\mixins.py', reloading
+2025-05-19 15:39:05,998 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\structures.py', reloading
+2025-05-19 15:39:06,000 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_bsr.py', reloading
+2025-05-19 15:39:06,000 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_construct.py', reloading
+2025-05-19 15:39:06,001 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\_internal.py', reloading
+2025-05-19 15:39:06,002 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_extract.py', reloading
+2025-05-19 15:39:06,002 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_matrix.py', reloading
+2025-05-19 15:39:06,003 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\request.py', reloading
+2025-05-19 15:39:06,004 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_matrix_io.py', reloading
+2025-05-19 15:39:06,004 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\jinja2\\environment.py', reloading
+2025-05-19 15:39:06,005 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\compressor.py', reloading
+2025-05-19 15:39:06,006 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\sansio\\request.py', reloading
+2025-05-19 15:39:06,008 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle.py', reloading
+2025-05-19 15:39:06,008 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle_utils.py', reloading
+2025-05-19 15:39:06,018 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_scalars.py', reloading
+2025-05-19 15:39:06,019 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_dtype_like.py', reloading
+2025-05-19 15:39:06,025 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle_compat.py', reloading
+2025-05-19 15:39:07,247 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:39:11,336 - app - INFO - Application initialized
+2025-05-19 15:39:11,336 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:39:11,336 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:39:11,344 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:39:11,355 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:40:29,709 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:40:29,710 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:40:29,714 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\random_forest.py', reloading
+2025-05-19 15:40:31,437 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:40:34,987 - app - INFO - Application initialized
+2025-05-19 15:40:34,987 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:40:34,987 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:40:34,996 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:40:35,013 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:50:13,549 - app - INFO - Application initialized
+2025-05-19 15:50:13,550 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:50:13,550 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:50:13,587 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 15:50:13,587 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 15:50:13,604 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 15:50:16,781 - app - INFO - Application initialized
+2025-05-19 15:50:16,781 - app - INFO - Checking model files for car price prediction...
+2025-05-19 15:50:16,781 - app - INFO - Model files already exist, skipping creation
+2025-05-19 15:50:16,790 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 15:50:16,813 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 15:50:30,360 - app - INFO - First request processed
+2025-05-19 15:50:30,433 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:30] "GET / HTTP/1.1" 200 -
+2025-05-19 15:50:30,561 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:50:30,622 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:30] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:50:57,129 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:57] "GET / HTTP/1.1" 200 -
+2025-05-19 15:50:57,164 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:50:57,383 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:57] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:50:59,850 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_155059.csv
+2025-05-19 15:50:59,857 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_143858.csv
+2025-05-19 15:50:59,862 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:59] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 15:50:59,885 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:50:59] "GET / HTTP/1.1" 200 -
+2025-05-19 15:51:00,115 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:51:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 15:51:00,215 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 15:51:00] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 15:51:00,876 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 15:51:01,605 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 15:51:11,246 - app - INFO - \u0110ào t\u1ea1o XGBoost...
+2025-05-19 15:51:14,445 - app - INFO - \u2705 Hoàn t\u1ea5t \u0111ào t\u1ea1o mô hình!
+2025-05-19 18:05:42,282 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\models.py', reloading
+2025-05-19 18:05:42,293 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\utils\\crawler.py', reloading
+2025-05-19 18:05:42,295 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\utils\\database.py', reloading
+2025-05-19 18:05:42,295 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\app\\utils\\preprocessor.py', reloading
+2025-05-19 18:05:42,296 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\training\\training.py', reloading
+2025-05-19 18:05:42,341 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\subprocess.py', reloading
+2025-05-19 18:05:42,342 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\datetime.py', reloading
+2025-05-19 18:05:42,343 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\_pydatetime.py', reloading
+2025-05-19 18:05:42,348 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\db__init.py', reloading
+2025-05-19 18:05:42,349 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\run.py', reloading
+2025-05-19 18:05:42,359 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\crawl\\chotot_xe_crawler.py', reloading
+2025-05-19 18:05:42,360 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\crawl\\scraper.py', reloading
+2025-05-19 18:05:42,361 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\preprocessing\\preprocessing.py', reloading
+2025-05-19 18:05:42,362 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\visualize\\visualize.py', reloading
+2025-05-19 18:05:42,365 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\models\\use_models.py', reloading
+2025-05-19 18:05:42,375 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\__init__.py', reloading
+2025-05-19 18:05:42,379 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\__init__.py', reloading
+2025-05-19 18:05:42,381 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\json\\__init__.py', reloading
+2025-05-19 18:05:42,385 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\app.py', reloading
+2025-05-19 18:05:42,386 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\blueprints.py', reloading
+2025-05-19 18:05:42,387 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\config.py', reloading
+2025-05-19 18:05:42,388 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\ctx.py', reloading
+2025-05-19 18:05:42,389 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\globals.py', reloading
+2025-05-19 18:05:42,391 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\helpers.py', reloading
+2025-05-19 18:05:42,392 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\templating.py', reloading
+2025-05-19 18:05:42,394 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\__init__.py', reloading
+2025-05-19 18:05:42,395 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\__init__.py', reloading
+2025-05-19 18:05:42,396 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\typing.py', reloading
+2025-05-19 18:05:42,397 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\app.py', reloading
+2025-05-19 18:05:42,399 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\scaffold.py', reloading
+2025-05-19 18:05:42,402 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\sansio\\response.py', reloading
+2025-05-19 18:05:42,403 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\utils.py', reloading
+2025-05-19 18:05:42,405 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\sansio\\blueprints.py', reloading
+2025-05-19 18:05:42,406 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\response.py', reloading
+2025-05-19 18:05:42,407 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\os.py', reloading
+2025-05-19 18:05:42,412 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\ntpath.py', reloading
+2025-05-19 18:05:42,416 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\headers.py', reloading
+2025-05-19 18:05:42,437 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\typing\\__init__.py', reloading
+2025-05-19 18:05:42,451 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\__init__.py', reloading
+2025-05-19 18:05:42,455 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_nested_sequence.py', reloading
+2025-05-19 18:05:42,456 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_nbit_base.py', reloading
+2025-05-19 18:05:42,457 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_shape.py', reloading
+2025-05-19 18:05:42,458 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_array_like.py', reloading
+2025-05-19 18:05:42,475 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pickle.py', reloading
+2025-05-19 18:05:42,477 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\pandas\\core\\reshape\\encoding.py', reloading
+2025-05-19 18:05:42,480 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\pandas\\__init__.py', reloading
+2025-05-19 18:05:42,481 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\warnings.py', reloading
+2025-05-19 18:05:42,482 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\posixpath.py', reloading
+2025-05-19 18:05:42,486 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\__init__.py', reloading
+2025-05-19 18:05:42,488 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_base.py', reloading
+2025-05-19 18:05:42,489 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_csr.py', reloading
+2025-05-19 18:05:42,491 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_csc.py', reloading
+2025-05-19 18:05:42,492 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_lil.py', reloading
+2025-05-19 18:05:42,493 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\threading.py', reloading
+2025-05-19 18:05:42,494 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_dok.py', reloading
+2025-05-19 18:05:42,496 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_coo.py', reloading
+2025-05-19 18:05:42,497 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\logging\\__init__.py', reloading
+2025-05-19 18:05:42,499 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_dia.py', reloading
+2025-05-19 18:05:42,500 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\traceback.py', reloading
+2025-05-19 18:05:42,500 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_bsr.py', reloading
+2025-05-19 18:05:42,501 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_construct.py', reloading
+2025-05-19 18:05:42,506 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_extract.py', reloading
+2025-05-19 18:05:42,507 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_matrix.py', reloading
+2025-05-19 18:05:42,509 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\scipy\\sparse\\_matrix_io.py', reloading
+2025-05-19 18:05:42,511 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\xgboost\\__init__.py', reloading
+2025-05-19 18:05:42,512 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\importlib\\__init__.py', reloading
+2025-05-19 18:05:42,514 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\compressor.py', reloading
+2025-05-19 18:05:42,516 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle.py', reloading
+2025-05-19 18:05:42,516 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle_utils.py', reloading
+2025-05-19 18:05:42,517 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\importlib\\util.py', reloading
+2025-05-19 18:05:42,526 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\flask\\wrappers.py', reloading
+2025-05-19 18:05:42,527 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\xgboost\\core.py', reloading
+2025-05-19 18:05:42,528 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\xgboost\\sklearn.py', reloading
+2025-05-19 18:05:42,530 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\xgboost\\compat.py', reloading
+2025-05-19 18:05:42,535 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\jinja2\\__init__.py', reloading
+2025-05-19 18:05:42,537 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\mixins.py', reloading
+2025-05-19 18:05:42,538 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\datastructures\\structures.py', reloading
+2025-05-19 18:05:42,540 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\_internal.py', reloading
+2025-05-19 18:05:42,542 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\wrappers\\request.py', reloading
+2025-05-19 18:05:42,544 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\jinja2\\environment.py', reloading
+2025-05-19 18:05:42,546 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\werkzeug\\sansio\\request.py', reloading
+2025-05-19 18:05:42,565 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_scalars.py', reloading
+2025-05-19 18:05:42,566 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\numpy\\_typing\\_dtype_like.py', reloading
+2025-05-19 18:05:42,573 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\joblib\\numpy_pickle_compat.py', reloading
+2025-05-19 18:05:42,585 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\shutil.py', reloading
+2025-05-19 18:05:42,590 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\matplotlib\\pyplot.py', reloading
+2025-05-19 18:05:42,592 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\glob.py', reloading
+2025-05-19 18:05:42,597 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\.venv\\Lib\\site-packages\\xgboost\\_typing.py', reloading
+2025-05-19 18:05:44,051 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 18:05:48,071 - app - INFO - Application initialized
+2025-05-19 18:05:48,071 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:05:48,071 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:05:48,084 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 18:05:48,096 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 18:15:53,710 - app - INFO - Application initialized
+2025-05-19 18:15:53,710 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:15:53,711 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:15:53,740 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 18:15:53,741 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 18:15:53,753 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 18:15:56,772 - app - INFO - Application initialized
+2025-05-19 18:15:56,772 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:15:56,772 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:15:56,780 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 18:15:56,791 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 18:15:57,306 - app - INFO - First request processed
+2025-05-19 18:15:57,336 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:15:57] "GET / HTTP/1.1" 200 -
+2025-05-19 18:15:57,460 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:15:57] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:15:57,569 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:15:57] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:16:02,172 - app.utils.preprocessor - INFO - Starting preprocessing with absolute path: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 18:16:02,174 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:02] "[32mPOST /preprocess HTTP/1.1[0m" 302 -
+2025-05-19 18:16:02,174 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 18:16:02,186 - app.utils.preprocessor - INFO - Updated processing log 3
+2025-05-19 18:16:02,189 - app.utils.preprocessor - INFO - Updated processing log 3
+2025-05-19 18:16:02,190 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 18:16:02,194 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:02] "GET / HTTP/1.1" 200 -
+2025-05-19 18:16:02,195 - app.utils.preprocessor - INFO - First 5 lines of input file:
+2025-05-19 18:16:02,195 - app.utils.preprocessor - INFO - Line 1: id,title,brand,model,year,price,mileage,fuel_type,transmission,owners,origin,car_type,seats,doors,version,condition,location,post_time,crawl_time,drivetrain,engine_type,horse_power,torque,engine_capacity,fuel_consumption,air_bags,ground_clearance,weight,load_capacity
+2025-05-19 18:16:02,196 - app.utils.preprocessor - INFO - Line 2: \u1ecf,Mercedes Benz E Class 2010 E250 - 80000 km,Mercedes Benz,E Class,2010,320000000,80000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,,Vi\u1ec7t Nam,Sedan,5,,,\u0110ã s\u1eed d\u1ee5ng,"Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng",\u0110\u0103ng 1 phút tr\u01b0\u1edbc,2025-05-13 12:45:11,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:16:02,196 - app.utils.preprocessor - INFO - Line 3: 124407149,Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM,Kia,Sedona,2020,845000000,85689,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,--,,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i",\u0110\u0103ng 2 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:16:02,196 - app.utils.preprocessor - INFO - Line 4: 121332884,Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch,Kia,Sorento,2016,455000000,100000,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i",\u0110\u0103ng 1 tháng tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:16:02,196 - app.utils.preprocessor - INFO - Line 5: 124296461,Hyundai Santa Fe 2013 2.4L 4WD - 107000 km,Hyundai,Santa Fe,2013,485000000,107000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,1,Hàn Qu\u1ed1c,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh",\u0110\u0103ng 9 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:16:02,196 - app.utils.preprocessor - INFO - Loading data from C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 18:16:02,412 - app.utils.preprocessor - INFO - First 5 rows of DataFrame:
+2025-05-19 18:16:02,413 - app.utils.preprocessor - INFO - Row 0: {'id': '\u1ecf', 'title': 'Mercedes Benz E Class 2010 E250 - 80000 km', 'brand': 'Mercedes Benz', 'model': 'E Class', 'year': 2010.0, 'price': 320000000, 'mileage': 80000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Vi\u1ec7t Nam', 'car_type': 'Sedan', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng', 'post_time': '\u0110\u0103ng 1 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:11', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:16:02,413 - app.utils.preprocessor - INFO - Row 1: {'id': '124407149', 'title': 'Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM', 'brand': 'Kia', 'model': 'Sedona', 'year': 2020.0, 'price': 845000000, 'mileage': 85689.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': '--', 'seats': nan, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 2 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:16:02,414 - app.utils.preprocessor - INFO - Row 2: {'id': '121332884', 'title': 'Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch', 'brand': 'Kia', 'model': 'Sorento', 'year': 2016.0, 'price': 455000000, 'mileage': 100000.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 1 tháng tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:16:02,414 - app.utils.preprocessor - INFO - Row 3: {'id': '124296461', 'title': 'Hyundai Santa Fe 2013 2.4L 4WD - 107000 km', 'brand': 'Hyundai', 'model': 'Santa Fe', 'year': 2013.0, 'price': 485000000, 'mileage': 107000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': 1.0, 'origin': 'Hàn Qu\u1ed1c', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 9 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:16:02,415 - app.utils.preprocessor - INFO - Row 4: {'id': '124942994', 'title': 'HONDA HRV G 2024 - S\u01a1n ZIN - Odo 3.700km - M\u1edaI KEN', 'brand': 'Honda', 'model': 'HR-V', 'year': 2024.0, 'price': 690000000, 'mileage': 3700.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Thái Lan', 'car_type': 'SUV / Cross over', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng Tân Phong, Qu\u1eadn 7, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 4 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:13', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:16:02,415 - app.utils.preprocessor - INFO - Initial data: 19870 rows, 29 columns
+2025-05-19 18:16:02,416 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:02] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:16:02,416 - app.utils.preprocessor - INFO - DataFrame columns: ['id', 'title', 'brand', 'model', 'year', 'price', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'doors', 'version', 'condition', 'location', 'post_time', 'crawl_time', 'drivetrain', 'engine_type', 'horse_power', 'torque', 'engine_capacity', 'fuel_consumption', 'air_bags', 'ground_clearance', 'weight', 'load_capacity']
+2025-05-19 18:16:02,436 - app.utils.preprocessor - INFO - Data after column selection: 19870 rows, 12 columns
+2025-05-19 18:16:02,437 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'condition', 'price']
+2025-05-19 18:16:02,437 - app.utils.preprocessor - INFO - Missing values count:
+2025-05-19 18:16:02,438 - app.utils.preprocessor - INFO -   brand: 0
+2025-05-19 18:16:02,440 - app.utils.preprocessor - INFO -   model: 0
+2025-05-19 18:16:02,440 - app.utils.preprocessor - INFO -   year: 20
+2025-05-19 18:16:02,440 - app.utils.preprocessor - INFO -   mileage: 1774
+2025-05-19 18:16:02,441 - app.utils.preprocessor - INFO -   fuel_type: 0
+2025-05-19 18:16:02,442 - app.utils.preprocessor - INFO -   transmission: 0
+2025-05-19 18:16:02,443 - app.utils.preprocessor - INFO -   owners: 11080
+2025-05-19 18:16:02,444 - app.utils.preprocessor - INFO -   origin: 0
+2025-05-19 18:16:02,445 - app.utils.preprocessor - INFO -   car_type: 0
+2025-05-19 18:16:02,445 - app.utils.preprocessor - INFO -   seats: 2129
+2025-05-19 18:16:02,446 - app.utils.preprocessor - INFO -   condition: 0
+2025-05-19 18:16:02,447 - app.utils.preprocessor - INFO -   price: 0
+2025-05-19 18:16:02,451 - app.utils.preprocessor - INFO - Filtered by year >= 2000: Removed 263 rows
+2025-05-19 18:16:02,457 - app.utils.preprocessor - INFO - Filtered origin != '\u0110ang c\u1eadp nh\u1eadt': Removed 2104 rows
+2025-05-19 18:16:02,460 - app.utils.preprocessor - INFO - Filtered car_type != '--': Removed 1868 rows
+2025-05-19 18:16:02,462 - app.utils.preprocessor - INFO - Dropped 'owners' column
+2025-05-19 18:16:02,468 - app.utils.preprocessor - INFO - Rows with at least one null value: 1883
+2025-05-19 18:16:02,480 - app.utils.preprocessor - INFO - After dropping null rows: 13752 rows left
+2025-05-19 18:16:02,493 - app.utils.preprocessor - INFO - Duplicate rows: 1010
+2025-05-19 18:16:02,504 - app.utils.preprocessor - INFO - After dropping duplicates: 12742 rows left
+2025-05-19 18:16:02,510 - app.utils.preprocessor - INFO - Filtered brand with few samples: Removed 99 rows
+2025-05-19 18:16:02,514 - app.utils.preprocessor - INFO - Filtered model with few samples: Removed 534 rows
+2025-05-19 18:16:02,519 - app.utils.preprocessor - INFO - Filtered transmission with few samples: Removed 5 rows
+2025-05-19 18:16:02,525 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:02] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:16:02,527 - app.utils.preprocessor - INFO - Filtered car_type with few samples: Removed 7 rows
+2025-05-19 18:16:02,527 - app.utils.preprocessor - INFO - After iteration 1: 12097 rows left
+2025-05-19 18:16:02,543 - app.utils.preprocessor - INFO - After iteration 2: 12097 rows left
+2025-05-19 18:16:02,545 - app.utils.preprocessor - INFO - Dropped 'condition' column - only has one value
+2025-05-19 18:16:02,545 - app.utils.preprocessor - INFO - Initial price range: 5,000,000 - 20,000,000,000 VND
+2025-05-19 18:16:02,546 - app.utils.preprocessor - INFO - Removing 22 cars with price > 5 billion VND
+2025-05-19 18:16:02,548 - app.utils.preprocessor - INFO - Removing 532 cars with price < 100 million VND
+2025-05-19 18:16:02,551 - app.utils.preprocessor - INFO - Updated price range: 102,000,000 - 4,999,000,000 VND
+2025-05-19 18:16:02,551 - app.utils.preprocessor - INFO - Final data statistics:
+2025-05-19 18:16:02,555 - app.utils.preprocessor - INFO - Rows with any null value: 0
+2025-05-19 18:16:02,561 - app.utils.preprocessor - INFO - Duplicate rows: 0
+2025-05-19 18:16:02,561 - app.utils.preprocessor - INFO - Final data: 11523 rows, 10 columns
+2025-05-19 18:16:02,561 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'origin', 'car_type', 'seats', 'price']
+2025-05-19 18:16:02,625 - app.utils.preprocessor - INFO - Preprocessed data saved to data\processed\processed_cars_20250519_181602.csv
+2025-05-19 18:16:02,634 - app.utils.preprocessor - INFO - Updated processing log 3
+2025-05-19 18:16:02,634 - app.utils.preprocessor - INFO - Preprocessing completed with result: True
+2025-05-19 18:16:06,746 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:06] "GET /logs HTTP/1.1" 200 -
+2025-05-19 18:16:06,964 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:16:06,996 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:06] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:16:12,737 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:12] "GET / HTTP/1.1" 200 -
+2025-05-19 18:16:12,966 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:16:12,997 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:12] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:16:38,577 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_181638.csv
+2025-05-19 18:16:38,582 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_181602.csv
+2025-05-19 18:16:38,583 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:38] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 18:16:38,595 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:38] "GET / HTTP/1.1" 200 -
+2025-05-19 18:16:38,728 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pyparsing\\core.py', reloading
+2025-05-19 18:16:38,836 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:38] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:16:38,913 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:16:38] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:16:39,345 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 18:16:42,306 - app - INFO - Application initialized
+2025-05-19 18:16:42,306 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:16:42,307 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:16:42,313 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 18:16:42,323 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 18:18:25,383 - app - INFO - First request processed
+2025-05-19 18:18:25,388 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_181825.csv
+2025-05-19 18:18:25,396 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_181602.csv
+2025-05-19 18:18:25,398 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:18:25] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 18:18:25,456 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:18:25] "GET / HTTP/1.1" 200 -
+2025-05-19 18:18:25,823 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:18:25] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:18:25,893 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:18:25] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:18:26,327 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 18:18:26,574 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 18:18:35,950 - app - INFO - \u0110ào t\u1ea1o XGBoost...
+2025-05-19 18:18:38,735 - app - INFO - \u2705 Hoàn t\u1ea5t \u0111ào t\u1ea1o mô hình!
+2025-05-19 18:21:22,714 - app.utils.preprocessor - INFO - Starting preprocessing with absolute path: C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 18:21:22,715 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:22] "[32mPOST /preprocess HTTP/1.1[0m" 302 -
+2025-05-19 18:21:22,715 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 18:21:22,729 - app.utils.preprocessor - INFO - Updated processing log 4
+2025-05-19 18:21:22,731 - app.utils.preprocessor - INFO - Updated processing log 4
+2025-05-19 18:21:22,731 - app.utils.preprocessor - INFO - Input file size: 5669877 bytes
+2025-05-19 18:21:22,732 - app.utils.preprocessor - INFO - First 5 lines of input file:
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Line 1: id,title,brand,model,year,price,mileage,fuel_type,transmission,owners,origin,car_type,seats,doors,version,condition,location,post_time,crawl_time,drivetrain,engine_type,horse_power,torque,engine_capacity,fuel_consumption,air_bags,ground_clearance,weight,load_capacity
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Line 2: \u1ecf,Mercedes Benz E Class 2010 E250 - 80000 km,Mercedes Benz,E Class,2010,320000000,80000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,,Vi\u1ec7t Nam,Sedan,5,,,\u0110ã s\u1eed d\u1ee5ng,"Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng",\u0110\u0103ng 1 phút tr\u01b0\u1edbc,2025-05-13 12:45:11,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Line 3: 124407149,Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM,Kia,Sedona,2020,845000000,85689,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,--,,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i",\u0110\u0103ng 2 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Line 4: 121332884,Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch,Kia,Sorento,2016,455000000,100000,D\u1ea7u,T\u1ef1 \u0111\u1ed9ng,,\u0110ang c\u1eadp nh\u1eadt,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i",\u0110\u0103ng 1 tháng tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Line 5: 124296461,Hyundai Santa Fe 2013 2.4L 4WD - 107000 km,Hyundai,Santa Fe,2013,485000000,107000,X\u0103ng,T\u1ef1 \u0111\u1ed9ng,1,Hàn Qu\u1ed1c,SUV / Cross over,7,,,\u0110ã s\u1eed d\u1ee5ng,"Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh",\u0110\u0103ng 9 phút tr\u01b0\u1edbc,2025-05-13 12:45:12,,,,,,,,,> 1 t\u1ea5n,> 2 t\u1ea5n
+2025-05-19 18:21:22,733 - app.utils.preprocessor - INFO - Loading data from C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\raw\raw.csv
+2025-05-19 18:21:22,742 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:22] "GET / HTTP/1.1" 200 -
+2025-05-19 18:21:22,914 - app.utils.preprocessor - INFO - First 5 rows of DataFrame:
+2025-05-19 18:21:22,916 - app.utils.preprocessor - INFO - Row 0: {'id': '\u1ecf', 'title': 'Mercedes Benz E Class 2010 E250 - 80000 km', 'brand': 'Mercedes Benz', 'model': 'E Class', 'year': 2010.0, 'price': 320000000, 'mileage': 80000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Vi\u1ec7t Nam', 'car_type': 'Sedan', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Xã Hi\u1ec7p An, Th\u1ecb xã Kinh Môn, H\u1ea3i D\u01b0\u01a1ng', 'post_time': '\u0110\u0103ng 1 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:11', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:21:22,916 - app.utils.preprocessor - INFO - Row 1: {'id': '124407149', 'title': 'Kia Sedona 2020  2.2 DATH full d\u1ea7u xe r\u1ea5t m\u1edbi HI\u1ebeM', 'brand': 'Kia', 'model': 'Sedona', 'year': 2020.0, 'price': 845000000, 'mileage': 85689.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': '--', 'seats': nan, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng H\u1ea1 \u0110ình, Qu\u1eadn Thanh Xuân, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 2 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:21:22,917 - app.utils.preprocessor - INFO - Row 2: {'id': '121332884', 'title': 'Kia Sorento GATH 2016 AT2.4 Full k\u1ecbch', 'brand': 'Kia', 'model': 'Sorento', 'year': 2016.0, 'price': 455000000, 'mileage': 100000.0, 'fuel_type': 'D\u1ea7u', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': '\u0110ang c\u1eadp nh\u1eadt', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Th\u1ecb tr\u1ea5n \u0110ông Anh, Huy\u1ec7n \u0110ông Anh, Hà N\u1ed9i', 'post_time': '\u0110\u0103ng 1 tháng tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:21:22,917 - app.utils.preprocessor - INFO - Row 3: {'id': '124296461', 'title': 'Hyundai Santa Fe 2013 2.4L 4WD - 107000 km', 'brand': 'Hyundai', 'model': 'Santa Fe', 'year': 2013.0, 'price': 485000000, 'mileage': 107000.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': 1.0, 'origin': 'Hàn Qu\u1ed1c', 'car_type': 'SUV / Cross over', 'seats': 7.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng 2, Qu\u1eadn Tân Bình, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 9 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:12', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:21:22,917 - app.utils.preprocessor - INFO - Row 4: {'id': '124942994', 'title': 'HONDA HRV G 2024 - S\u01a1n ZIN - Odo 3.700km - M\u1edaI KEN', 'brand': 'Honda', 'model': 'HR-V', 'year': 2024.0, 'price': 690000000, 'mileage': 3700.0, 'fuel_type': 'X\u0103ng', 'transmission': 'T\u1ef1 \u0111\u1ed9ng', 'owners': nan, 'origin': 'Thái Lan', 'car_type': 'SUV / Cross over', 'seats': 5.0, 'doors': nan, 'version': nan, 'condition': '\u0110ã s\u1eed d\u1ee5ng', 'location': 'Ph\u01b0\u1eddng Tân Phong, Qu\u1eadn 7, Tp H\u1ed3 Chí Minh', 'post_time': '\u0110\u0103ng 4 phút tr\u01b0\u1edbc', 'crawl_time': '2025-05-13 12:45:13', 'drivetrain': nan, 'engine_type': nan, 'horse_power': nan, 'torque': nan, 'engine_capacity': nan, 'fuel_consumption': nan, 'air_bags': nan, 'ground_clearance': nan, 'weight': '> 1 t\u1ea5n', 'load_capacity': '> 2 t\u1ea5n'}
+2025-05-19 18:21:22,917 - app.utils.preprocessor - INFO - Initial data: 19870 rows, 29 columns
+2025-05-19 18:21:22,917 - app.utils.preprocessor - INFO - DataFrame columns: ['id', 'title', 'brand', 'model', 'year', 'price', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'doors', 'version', 'condition', 'location', 'post_time', 'crawl_time', 'drivetrain', 'engine_type', 'horse_power', 'torque', 'engine_capacity', 'fuel_consumption', 'air_bags', 'ground_clearance', 'weight', 'load_capacity']
+2025-05-19 18:21:22,926 - app.utils.preprocessor - INFO - Data after column selection: 19870 rows, 12 columns
+2025-05-19 18:21:22,926 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'owners', 'origin', 'car_type', 'seats', 'condition', 'price']
+2025-05-19 18:21:22,926 - app.utils.preprocessor - INFO - Missing values count:
+2025-05-19 18:21:22,927 - app.utils.preprocessor - INFO -   brand: 0
+2025-05-19 18:21:22,928 - app.utils.preprocessor - INFO -   model: 0
+2025-05-19 18:21:22,929 - app.utils.preprocessor - INFO -   year: 20
+2025-05-19 18:21:22,929 - app.utils.preprocessor - INFO -   mileage: 1774
+2025-05-19 18:21:22,930 - app.utils.preprocessor - INFO -   fuel_type: 0
+2025-05-19 18:21:22,931 - app.utils.preprocessor - INFO -   transmission: 0
+2025-05-19 18:21:22,931 - app.utils.preprocessor - INFO -   owners: 11080
+2025-05-19 18:21:22,932 - app.utils.preprocessor - INFO -   origin: 0
+2025-05-19 18:21:22,933 - app.utils.preprocessor - INFO -   car_type: 0
+2025-05-19 18:21:22,933 - app.utils.preprocessor - INFO -   seats: 2129
+2025-05-19 18:21:22,935 - app.utils.preprocessor - INFO -   condition: 0
+2025-05-19 18:21:22,935 - app.utils.preprocessor - INFO -   price: 0
+2025-05-19 18:21:22,940 - app.utils.preprocessor - INFO - Filtered by year >= 2000: Removed 263 rows
+2025-05-19 18:21:22,945 - app.utils.preprocessor - INFO - Filtered origin != '\u0110ang c\u1eadp nh\u1eadt': Removed 2104 rows
+2025-05-19 18:21:22,949 - app.utils.preprocessor - INFO - Filtered car_type != '--': Removed 1868 rows
+2025-05-19 18:21:22,951 - app.utils.preprocessor - INFO - Dropped 'owners' column
+2025-05-19 18:21:22,957 - app.utils.preprocessor - INFO - Rows with at least one null value: 1883
+2025-05-19 18:21:22,965 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:21:22,967 - app.utils.preprocessor - INFO - After dropping null rows: 13752 rows left
+2025-05-19 18:21:22,982 - app.utils.preprocessor - INFO - Duplicate rows: 1010
+2025-05-19 18:21:22,993 - app.utils.preprocessor - INFO - After dropping duplicates: 12742 rows left
+2025-05-19 18:21:22,999 - app.utils.preprocessor - INFO - Filtered brand with few samples: Removed 99 rows
+2025-05-19 18:21:23,005 - app.utils.preprocessor - INFO - Filtered model with few samples: Removed 534 rows
+2025-05-19 18:21:23,010 - app.utils.preprocessor - INFO - Filtered transmission with few samples: Removed 5 rows
+2025-05-19 18:21:23,019 - app.utils.preprocessor - INFO - Filtered car_type with few samples: Removed 7 rows
+2025-05-19 18:21:23,019 - app.utils.preprocessor - INFO - After iteration 1: 12097 rows left
+2025-05-19 18:21:23,031 - app.utils.preprocessor - INFO - After iteration 2: 12097 rows left
+2025-05-19 18:21:23,034 - app.utils.preprocessor - INFO - Dropped 'condition' column - only has one value
+2025-05-19 18:21:23,034 - app.utils.preprocessor - INFO - Initial price range: 5,000,000 - 20,000,000,000 VND
+2025-05-19 18:21:23,035 - app.utils.preprocessor - INFO - Removing 22 cars with price > 5 billion VND
+2025-05-19 18:21:23,037 - app.utils.preprocessor - INFO - Removing 532 cars with price < 100 million VND
+2025-05-19 18:21:23,040 - app.utils.preprocessor - INFO - Updated price range: 102,000,000 - 4,999,000,000 VND
+2025-05-19 18:21:23,040 - app.utils.preprocessor - INFO - Final data statistics:
+2025-05-19 18:21:23,043 - app.utils.preprocessor - INFO - Rows with any null value: 0
+2025-05-19 18:21:23,049 - app.utils.preprocessor - INFO - Duplicate rows: 0
+2025-05-19 18:21:23,049 - app.utils.preprocessor - INFO - Final data: 11523 rows, 10 columns
+2025-05-19 18:21:23,049 - app.utils.preprocessor - INFO - Columns: ['brand', 'model', 'year', 'mileage', 'fuel_type', 'transmission', 'origin', 'car_type', 'seats', 'price']
+2025-05-19 18:21:23,071 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:23] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:21:23,117 - app.utils.preprocessor - INFO - Preprocessed data saved to data\processed\processed_cars_20250519_182122.csv
+2025-05-19 18:21:23,125 - app.utils.preprocessor - INFO - Updated processing log 4
+2025-05-19 18:21:23,126 - app.utils.preprocessor - INFO - Preprocessing completed with result: True
+2025-05-19 18:21:28,609 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:28] "[33mGET /api/crawl-status/4 HTTP/1.1[0m" 404 -
+2025-05-19 18:21:33,077 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:33] "[33mGET /api/crawl-status/4 HTTP/1.1[0m" 404 -
+2025-05-19 18:21:35,253 - app - INFO - \u0110ã backup cleaned.csv thành C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\preprocessing\cleaned_backup_20250519_182135.csv
+2025-05-19 18:21:35,256 - app - INFO - \u0110ã c\u1eadp nh\u1eadt cleaned.csv t\u1eeb C:\Users\admin\Documents\GitHub\Used_cars_prediction\data\processed\processed_cars_20250519_182122.csv
+2025-05-19 18:21:35,258 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:35] "[32mPOST /train-models HTTP/1.1[0m" 302 -
+2025-05-19 18:21:35,261 - app - INFO - \u0110ào t\u1ea1o Linear Regression...
+2025-05-19 18:21:35,268 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:35] "GET / HTTP/1.1" 200 -
+2025-05-19 18:21:35,412 - app - INFO - \u0110ào t\u1ea1o Random Forest...
+2025-05-19 18:21:35,512 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:35] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-05-19 18:21:35,588 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 18:21:35] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-05-19 18:21:42,196 - app - INFO - \u0110ào t\u1ea1o XGBoost...
+2025-05-19 18:21:43,688 - app - INFO - \u2705 Hoàn t\u1ea5t \u0111ào t\u1ea1o mô hình!
+2025-05-19 18:26:45,968 - app - INFO - Application initialized
+2025-05-19 18:26:45,968 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:26:45,969 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:26:45,998 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.6.103:5000
+2025-05-19 18:26:45,998 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-05-19 18:26:46,015 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 18:26:48,884 - app - INFO - Application initialized
+2025-05-19 18:26:48,884 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:26:48,884 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:26:48,892 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 18:26:48,902 - werkzeug - INFO -  * Debugger PIN: 304-781-053
+2025-05-19 18:29:18,305 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\preprocessing\\preprocessing.py', reloading
+2025-05-19 18:29:18,306 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\preprocessing\\preprocessing.py', reloading
+2025-05-19 18:29:18,314 - werkzeug - INFO -  * Detected change in 'C:\\Users\\admin\\Documents\\GitHub\\Used_cars_prediction\\src\\data\\preprocessing\\preprocessing.py', reloading
+2025-05-19 18:29:19,756 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-05-19 18:29:22,672 - app - INFO - Application initialized
+2025-05-19 18:29:22,672 - app - INFO - Checking model files for car price prediction...
+2025-05-19 18:29:22,672 - app - INFO - Model files already exist, skipping creation
+2025-05-19 18:29:22,681 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 18:29:22,691 - werkzeug - INFO -  * Debugger PIN: 304-781-053
