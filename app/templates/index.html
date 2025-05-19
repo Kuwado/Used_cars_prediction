@@ -185,6 +185,24 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="card-title mb-0">Step 4: Đào tạo lại mô hình</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Đào tạo lại các mô hình dự đoán giá xe với dữ liệu mới nhất.</p>
+
+                        <form action="{{ url_for('main.train_models') }}" method="post">
+                            <button type="submit" class="btn btn-info">Đào tạo mô hình</button>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Quá trình này có thể mất vài phút. Vui lòng kiểm tra logs để biết
+                            trạng thái.</small>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row mt-4">

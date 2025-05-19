@@ -3,8 +3,8 @@ import os
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# df = pd.read_csv("../../../data/raw/raw.csv")
-df = pd.read_csv("../../../data/raw/chotot_xe_data.csv")
+df = pd.read_csv("../../../data/raw/raw.csv")
+# df = pd.read_csv("../../../data/raw/chotot_xe_data.csv")
 
 
 # In số dòng và số cột

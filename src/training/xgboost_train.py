@@ -4,11 +4,16 @@ from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
-
+import os
 
 def xgboost_training():
     # Đọc dữ liệu
-    df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+    # df = pd.read_csv("../../data/preprocessing/cleaned.csv")
+    # Xác định đường dẫn tuyệt đối tới cleaned.csv
+    cleaned_path = os.path.abspath(os.path.join(os.getcwd(), "data", "preprocessing", "cleaned.csv"))
+
+    # Đọc file
+    df = pd.read_csv(cleaned_path)
 
     # One-hot encoding các cột phân loại
     df_encoded = pd.get_dummies(
@@ -41,8 +46,11 @@ def xgboost_training():
     xgb_model.fit(X_train, y_train)
     print("Training model XGBoost đã hoàn tất")
 
+    model_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models'))
+    os.makedirs(model_dir, exist_ok=True)
     # Lưu model
-    joblib.dump(xgb_model, "../models/xgboost_model.pkl")
+    # joblib.dump(xgb_model, "../models/xgboost_model.pkl")
+    joblib.dump(xgb_model, os.path.join(model_dir, "xgboost_model.pkl"))
     print("Đã lưu model XGBoost")
 
     # Dự đoán

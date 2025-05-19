@@ -579,3 +579,88 @@ def predict_price(input_data):
     except Exception as e:
         current_app.logger.error(f"Error in predict_price: {str(e)}")
         return None
+    
+@main_bp.route('/train-models', methods=['POST'])
+def train_models():
+    """Đào tạo lại các mô hình dự đoán giá xe."""
+    import os
+    import sys
+    import shutil
+    from datetime import datetime
+    import glob
+    import traceback
+    import importlib.util
+    import threading
+    from flask import current_app, flash, redirect, url_for
+
+    current_dir = os.getcwd()
+    project_dir = current_dir if 'app' in os.listdir(current_dir) else os.path.dirname(current_dir)
+
+    # Đường dẫn thư mục
+    data_dir = os.path.join(project_dir, "data")
+    processed_dir = os.path.join(data_dir, "processed")
+    preprocessing_dir = os.path.join(data_dir, "preprocessing")
+    training_dir = os.path.join(project_dir, "src", "training")
+
+    # Đảm bảo các thư mục tồn tại
+    for d in [processed_dir, preprocessing_dir, training_dir]:
+        os.makedirs(d, exist_ok=True)
+
+    try:
+        # Tìm file processed mới nhất
+        processed_files = glob.glob(os.path.join(processed_dir, "*.csv"))
+        if not processed_files:
+            flash('Không tìm thấy file processed nào. Vui lòng chạy bước preprocessing trước.', 'error')
+            return redirect(url_for('main.index'))
+
+        latest_processed_file = max(processed_files, key=os.path.getmtime)
+
+        cleaned_file = os.path.join(preprocessing_dir, "cleaned.csv")
+
+        # ✅ BACKUP FILE cleaned.csv NẾU TỒN TẠI
+        if os.path.exists(cleaned_file):
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_file = os.path.join(preprocessing_dir, f"cleaned_backup_{timestamp}.csv")
+            shutil.move(cleaned_file, backup_file)
+            current_app.logger.info(f"Đã backup cleaned.csv thành {backup_file}")
+
+        # Ghi đè cleaned.csv bằng processed mới nhất
+        shutil.copy2(latest_processed_file, cleaned_file)
+        current_app.logger.info(f"Đã cập nhật cleaned.csv từ {latest_processed_file}")
+
+        # Khởi động huấn luyện nền
+        app = current_app._get_current_object()
+
+        def run_training():
+            with app.app_context():
+                try:
+                    sys.path.insert(0, training_dir)
+                    sys.path.insert(0, os.path.dirname(training_dir))
+
+                    spec_lr = importlib.util.spec_from_file_location("linear_regression", os.path.join(training_dir, "linear_regression.py"))
+                    spec_rf = importlib.util.spec_from_file_location("random_forest", os.path.join(training_dir, "random_forest.py"))
+                    spec_xgb = importlib.util.spec_from_file_location("xgboost_train", os.path.join(training_dir, "xgboost_train.py"))
+
+                    lr = importlib.util.module_from_spec(spec_lr); spec_lr.loader.exec_module(lr)
+                    rf = importlib.util.module_from_spec(spec_rf); spec_rf.loader.exec_module(rf)
+                    xgb = importlib.util.module_from_spec(spec_xgb); spec_xgb.loader.exec_module(xgb)
+
+                    app.logger.info("Đào tạo Linear Regression..."); lr.linear_regression_training()
+                    app.logger.info("Đào tạo Random Forest..."); rf.random_forest_training()
+                    app.logger.info("Đào tạo XGBoost..."); xgb.xgboost_training()
+
+                    app.logger.info("✅ Hoàn tất đào tạo mô hình!")
+                except Exception as e:
+                    app.logger.error(f"❌ Lỗi khi đào tạo mô hình: {e}")
+                    app.logger.error(traceback.format_exc())
+
+        threading.Thread(target=run_training, daemon=True).start()
+
+        flash('Quá trình đào tạo mô hình đã bắt đầu! Vui lòng kiểm tra logs để theo dõi.', 'success')
+        return redirect(url_for('main.index'))
+
+    except Exception as e:
+        current_app.logger.error(f"Lỗi khi chuẩn bị quá trình đào tạo: {e}")
+        current_app.logger.error(traceback.format_exc())
+        flash(f"Lỗi: {str(e)}", 'error')
+        return redirect(url_for('main.index'))
