@@ -24,14 +24,16 @@ def index():
     latest_crawl = CrawlLog.query.order_by(CrawlLog.start_time.desc()).first()
     latest_processing = ProcessingLog.query.order_by(ProcessingLog.start_time.desc()).first()
     
-    # Auto-check for stuck crawlers
-    check_stuck_crawlers()
+    # REMOVE auto-check for stuck crawlers - chỉ check khi user yêu cầu
+    # check_stuck_crawlers()  # COMMENT OUT dòng này
     
     return render_template('index.html', 
                            brand_count=brand_count,
                            model_count=model_count,
                            latest_crawl=latest_crawl,
                            latest_processing=latest_processing)
+
+# Trong file routes.py, sửa lại route crawl
 
 @main_bp.route('/crawl', methods=['POST'])
 def crawl():
@@ -59,20 +61,19 @@ def crawl():
     
     # Start crawling in a thread with timeout monitoring
     def run_with_timeout():
-        # Create app context for the thread
-        with app.app_context():
-            try:
-                # Create a ThreadPoolExecutor for timeout control
-                with concurrent.futures.ThreadPoolExecutor() as executor:
-                    # Submit the task to be executed with log_id (not the object)
-                    future = executor.submit(run_crawler, start_page, end_page, log_id)
+        try:
+            # Create a ThreadPoolExecutor for timeout control
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                # Submit the task to be executed with log_id AND app
+                future = executor.submit(run_crawler, start_page, end_page, log_id, app)
+                
+                try:
+                    # Wait for the future to complete with timeout
+                    result = future.result(timeout=timeout)
                     
-                    try:
-                        # Wait for the future to complete with timeout
-                        result = future.result(timeout=timeout)
-                        
-                        # If crawler doesn't update status, update it here
-                        # Get a fresh instance of the log
+                    # If crawler doesn't update status, update it here
+                    # Get a fresh instance of the log
+                    with app.app_context():
                         updated_log = CrawlLog.query.get(log_id)
                         if updated_log and updated_log.status.startswith('running'):
                             updated_log.status = 'completed'
@@ -80,8 +81,9 @@ def crawl():
                             db.session.commit()
                             app.logger.info(f"Crawler job {log_id} completed by timeout monitor")
                             
-                    except concurrent.futures.TimeoutError:
-                        # Handle timeout - get a fresh instance
+                except concurrent.futures.TimeoutError:
+                    # Handle timeout - get a fresh instance
+                    with app.app_context():
                         updated_log = CrawlLog.query.get(log_id)
                         if updated_log:
                             updated_log.status = 'failed'
@@ -89,10 +91,11 @@ def crawl():
                             updated_log.end_time = datetime.now()
                             db.session.commit()
                             app.logger.error(f"Crawler job {log_id} timed out after {timeout} seconds")
-                    
-            except Exception as e:
-                # Handle exceptions in the thread - get a fresh instance
-                app.logger.error(f"Error in crawler thread: {str(e)}")
+                
+        except Exception as e:
+            # Handle exceptions in the thread - get a fresh instance
+            app.logger.error(f"Error in crawler thread: {str(e)}")
+            with app.app_context():
                 updated_log = CrawlLog.query.get(log_id)
                 if updated_log:
                     updated_log.status = 'failed'
@@ -664,3 +667,62 @@ def train_models():
         current_app.logger.error(traceback.format_exc())
         flash(f"Lỗi: {str(e)}", 'error')
         return redirect(url_for('main.index'))
+
+@main_bp.route('/api/force-update-records/<int:log_id>')
+def force_update_records(log_id):
+    """API để force update records count cho một crawl job cụ thể."""
+    try:
+        crawl_log = CrawlLog.query.get_or_404(log_id)
+        
+        # Nếu crawl job đang chạy, kiểm tra file CSV để đếm records thực tế
+        if crawl_log.status.startswith('running') and crawl_log.filename:
+            csv_path = os.path.join('data', 'raw', crawl_log.filename)
+            if os.path.exists(csv_path):
+                try:
+                    import pandas as pd
+                    df = pd.read_csv(csv_path)
+                    actual_count = len(df)
+                    
+                    # Update records count nếu khác với database
+                    if actual_count != crawl_log.records_count:
+                        crawl_log.records_count = actual_count
+                        db.session.commit()
+                        
+                        return jsonify({
+                            'success': True,
+                            'updated': True,
+                            'records_count': actual_count,
+                            'message': f'Updated records count to {actual_count}'
+                        })
+                    else:
+                        return jsonify({
+                            'success': True,
+                            'updated': False,
+                            'records_count': actual_count,
+                            'message': 'Records count is already up to date'
+                        })
+                        
+                except Exception as e:
+                    current_app.logger.error(f"Error reading CSV file: {e}")
+                    return jsonify({
+                        'success': False,
+                        'error': f'Error reading CSV file: {str(e)}'
+                    })
+            else:
+                return jsonify({
+                    'success': False,
+                    'error': 'CSV file not found'
+                })
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Crawl job is not running or no filename specified'
+            })
+            
+    except Exception as e:
+        current_app.logger.error(f"Error force updating records: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        })
+

@@ -22,43 +22,44 @@ logger = logging.getLogger(__name__)
 class ChototXeCrawler:
     """Class for crawling car data from chotot.com."""
     
-    def __init__(self, start_page=1, end_page=1, log_id=None):
-        """Initialize the crawler with page range and log ID."""
-        self.start_page = start_page
-        self.end_page = end_page
-        self.log_id = log_id
-        
-        # Generate a timestamped filename for this crawl
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        self.filename = f"chotot_cars_{timestamp}.csv"
-        self.csv_path = os.path.join('data', 'raw', self.filename)
-        
-        # Create directories if they don't exist
-        os.makedirs(os.path.dirname(self.csv_path), exist_ok=True)
-        
-        # Initialize CSV file and writer
-        self.csv_file = None
-        self.csv_writer = None
-        self.init_csv()
-        
-        # Base URL and headers for requests
-        self.base_url = "https://xe.chotot.com/mua-ban-oto"
-        self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            'Referer': 'https://xe.chotot.com/'
-        }
-        
-        # Counter for cars found
-        self.cars_count = 0
-        
-        # Last update time for heartbeat
-        self.last_update_time = datetime.now()
-        
-        # Update the CrawlLog with filename
-        self.update_crawl_log(filename=self.filename)
-    
+    def __init__(self, start_page=1, end_page=1, log_id=None, app=None):
+            """Initialize the crawler with page range and log ID."""
+            self.start_page = start_page
+            self.end_page = end_page
+            self.log_id = log_id
+            self.app = app  # Thêm tham số app
+            
+            # Generate a timestamped filename for this crawl
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+            self.filename = f"chotot_cars_{timestamp}.csv"
+            self.csv_path = os.path.join('data', 'raw', self.filename)
+            
+            # Create directories if they don't exist
+            os.makedirs(os.path.dirname(self.csv_path), exist_ok=True)
+            
+            # Initialize CSV file and writer
+            self.csv_file = None
+            self.csv_writer = None
+            self.init_csv()
+            
+            # Base URL and headers for requests
+            self.base_url = "https://xe.chotot.com/mua-ban-oto"
+            self.headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                'Referer': 'https://xe.chotot.com/'
+            }
+            
+            # Counter for cars found
+            self.cars_count = 0
+            
+            # Last update time for heartbeat
+            self.last_update_time = datetime.now()
+            
+            # Update the CrawlLog with filename
+            self.update_crawl_log(filename=self.filename)
+
     def init_csv(self):
         """Initialize the CSV file with headers."""
         try:
@@ -83,51 +84,58 @@ class ChototXeCrawler:
             raise
     
     def update_crawl_log(self, status=None, records_count=None, error_message=None, filename=None, end_time=None):
-        """Update the crawl log in the database."""
-        if not self.log_id:
-            return
-        
-        try:
-            # Update heartbeat timestamp
-            self.last_update_time = datetime.now()
+            """Update the crawl log in the database."""
+            if not self.log_id or not self.app:
+                return
             
-            # Set up update values
-            update_values = {}
-            
-            if status is not None:
-                update_values['status'] = status
-            
-            if records_count is not None:
-                update_values['records_count'] = records_count
-            
-            if error_message is not None:
-                update_values['error_message'] = error_message
+            try:
+                # Update heartbeat timestamp
+                self.last_update_time = datetime.now()
                 
-            if filename is not None:
-                update_values['filename'] = filename
-                
-            if end_time is not None:
-                update_values['end_time'] = end_time
-            
-            # Only proceed if we have values to update
-            if update_values:
-                from flask import current_app
-                # We need to use Flask app context to access database
-                with current_app.app_context():
+                # Sử dụng app context từ app được truyền vào
+                with self.app.app_context():
+                    from app.utils.database import db
+                    from app.models import CrawlLog
+                    
                     # Get the crawl log entry
                     crawl_log = CrawlLog.query.get(self.log_id)
                     if crawl_log:
                         # Update the fields
-                        for key, value in update_values.items():
-                            setattr(crawl_log, key, value)
-                        # Commit changes
+                        if status is not None:
+                            crawl_log.status = status
+                        
+                        if records_count is not None:
+                            crawl_log.records_count = records_count
+                        
+                        if error_message is not None:
+                            crawl_log.error_message = error_message
+                            
+                        if filename is not None:
+                            crawl_log.filename = filename
+                            
+                        if end_time is not None:
+                            crawl_log.end_time = end_time
+                        
+                        # Force commit immediately
                         db.session.commit()
-                        logger.info(f"Updated crawl log {self.log_id} with {update_values}")
+                        
+                        # Log để debug
+                        if records_count is not None:
+                            logger.info(f"Successfully updated crawl log {self.log_id}: records_count = {records_count}")
+                            
                     else:
                         logger.error(f"Crawl log with ID {self.log_id} not found")
-        except Exception as e:
-            logger.error(f"Error updating crawl log: {e}")
-    
+            except Exception as e:
+                logger.error(f"Error updating crawl log: {e}")
+                # Rollback nếu có lỗi
+                try:
+                    if self.app:
+                        with self.app.app_context():
+                            from app.utils.database import db
+                            db.session.rollback()
+                except:
+                    pass
+
     def get_page(self, url):
         """Fetch a page with retry logic."""
         max_retries = 3
@@ -158,8 +166,8 @@ class ChototXeCrawler:
                 
                 logger.info(f"Response received from {url}: {len(response.text)} bytes")
                 
-                # Update heartbeat after successful request
-                self.update_crawl_log(records_count=self.cars_count)
+                # KHÔNG update heartbeat ở đây nữa vì sẽ bị overwrite
+                # self.update_crawl_log(records_count=self.cars_count)
                 
                 return response.text
             except requests.exceptions.RequestException as e:
@@ -170,7 +178,7 @@ class ChototXeCrawler:
         
         logger.error(f"Failed to fetch {url} after {max_retries} attempts")
         return None
-    
+
     def parse_car_price(self, price_text):
         """Parse price text to integer."""
         if not price_text:
@@ -372,17 +380,19 @@ class ChototXeCrawler:
             self.csv_writer.writerow(car_data)
             self.csv_file.flush()  # Ensure data is written immediately
             
-            logger.info(f"Saved car ID: {car_data['id']} to CSV")
+            # Tăng counter TRƯỚC khi update log
             self.cars_count += 1
             
-            # Update the crawl log record count
+            logger.info(f"Saved car ID: {car_data['id']} to CSV. Total cars: {self.cars_count}")
+            
+            # Update the crawl log record count NGAY LẬP TỨC với app context
             self.update_crawl_log(records_count=self.cars_count)
             
             return True
         except Exception as e:
             logger.error(f"Error saving car to CSV: {e}")
             return False
-    
+
     def crawl_page(self, page_num):
         """Crawl a single page of car listings."""
         page_url = f"{self.base_url}?page={page_num}"
@@ -424,9 +434,11 @@ class ChototXeCrawler:
         page_car_count = 0
         for idx, car_url in enumerate(car_urls):
             try:
-                # Update progress
-                if idx % 5 == 0:  # Update every 5 cars
-                    self.update_crawl_log(status=f'running-page-{page_num}-item-{idx+1}/{len(car_urls)}')
+                # Update progress mỗi 5 cars để giảm spam DB
+                if idx % 5 == 0 or idx == len(car_urls) - 1:
+                    self.update_crawl_log(
+                        status=f'running-page-{page_num}-item-{idx+1}/{len(car_urls)}'
+                    )
                 
                 # Get car detail page
                 car_html = self.get_page(car_url)
@@ -436,19 +448,33 @@ class ChototXeCrawler:
                 # Extract car details
                 car_data = self.extract_car_details(car_html, car_url)
                 if car_data:
-                    # Save to CSV
+                    # Save to CSV - function này sẽ tự động update records_count
                     if self.save_car_to_csv(car_data):
                         page_car_count += 1
-                        logger.info(f"Saved car: {car_data.get('title', 'Unknown')} - ID: {car_data.get('id', 'Unknown')}")
-                
-                # Print current progress
-                print(f"\rCars crawled: {self.cars_count} (Page {page_num}, Item {idx+1}/{len(car_urls)})", end="")
+                        
+                        # Log với số lượng hiện tại
+                        logger.info(f"Saved car: {car_data.get('title', 'Unknown')} - ID: {car_data.get('id', 'Unknown')} - Total: {self.cars_count}")
+                        
+                        # Print progress với số thực tế
+                        print(f"\rCars crawled: {self.cars_count} (Page {page_num}, Item {idx+1}/{len(car_urls)})", end="", flush=True)
                 
             except Exception as e:
                 logger.error(f"Error processing car {car_url}: {e}")
         
+        # Update cuối page với số chính xác và đảm bảo cập nhật
+        final_status = f'running-completed-page-{page_num}'
+        self.update_crawl_log(
+            status=final_status,
+            records_count=self.cars_count
+        )
+        
+        # Double check: Force update một lần nữa sau 1 giây
+        import time
+        time.sleep(1)
+        self.update_crawl_log(records_count=self.cars_count)
+        
         return page_car_count
-    
+
     def crawl_pages(self):
         """Crawl multiple pages in the specified range."""
         logger.info(f"Starting crawl from page {self.start_page} to {self.end_page}")
@@ -513,19 +539,21 @@ class ChototXeCrawler:
             logger.info("CSV file closed")
 
 
-def run_crawler(start_page, end_page, log_id=None):
+def run_crawler(start_page, end_page, log_id=None, app=None):
     """Run the crawler with the specified parameters."""
     try:
-        crawler = ChototXeCrawler(start_page, end_page, log_id)
+        # Truyền app vào crawler
+        crawler = ChototXeCrawler(start_page, end_page, log_id, app)
         crawler.crawl_pages()
         return True
     except Exception as e:
         logger.error(f"Error running crawler: {e}")
         # Make one final attempt to update the status
         try:
-            from flask import current_app
-            with current_app.app_context():
-                if log_id:
+            if app and log_id:
+                with app.app_context():
+                    from app.utils.database import db
+                    from app.models import CrawlLog
                     crawl_log = CrawlLog.query.get(log_id)
                     if crawl_log and crawl_log.status == 'running':
                         crawl_log.status = 'failed'
@@ -535,7 +563,6 @@ def run_crawler(start_page, end_page, log_id=None):
         except:
             pass
         return False
-
 
 def get_latest_raw_file():
     """Get the path to the latest raw data file."""
@@ -604,18 +631,18 @@ def check_stuck_crawlers():
         updated_count = 0
         
         for job in running_jobs:
-            # Check if job has been running for more than 30 minutes
+            # Tăng timeout từ 30 phút lên 2 tiếng
             time_diff = datetime.now() - job.start_time
             
-            # If running over 30 minutes with no progress, mark as completed
-            if time_diff.total_seconds() > 1800:  # 30 minutes
+            # If running over 2 hours with no progress, mark as completed
+            if time_diff.total_seconds() > 7200:  # 2 hours instead of 30 minutes
                 job.status = 'completed'
                 job.end_time = datetime.now()
-                job.error_message = 'Automatically marked as completed (timeout after 30 minutes)'
+                job.error_message = 'Automatically marked as completed (timeout after 2 hours)'
                 updated_count += 1
                 
         if updated_count > 0:
             db.session.commit()
             logger.info(f"Updated {updated_count} stuck crawler jobs")
             
-        return updated_count
+        return updated_count 
