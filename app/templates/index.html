@@ -27,25 +27,6 @@
             </div>
         </div>
 
-        <!-- Sửa đổi thông tin hiển thị số liệu -->
-        <div class="card h-100">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Database Statistics</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Brands in database
-                        <span class="badge bg-primary rounded-pill">{{ brand_count }}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Models in database
-                        <span class="badge bg-primary rounded-pill">{{ model_count }}</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -60,7 +41,7 @@
         {% endwith %}
 
         <div class="row mb-4">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Database Statistics</h5>
@@ -84,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card h-100">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Activity Status</h5>
@@ -122,7 +103,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h5 class="card-title mb-0">Step 1: Crawl Data</h5>
@@ -150,7 +131,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header bg-success text-white">
                         <h5 class="card-title mb-0">Step 2: Preprocess Data</h5>
@@ -168,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header bg-warning text-dark">
                         <h5 class="card-title mb-0">Step 3: Import to Database</h5>
@@ -185,21 +166,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header bg-info text-white">
-                        <h5 class="card-title mb-0">Step 4: Đào tạo lại mô hình</h5>
+                        <h5 class="card-title mb-0">Step 4: Retrain the models</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Đào tạo lại các mô hình dự đoán giá xe với dữ liệu mới nhất.</p>
+                        <p class="card-text">Retrain the car price prediction models with the latest data.</p>
 
                         <form action="{{ url_for('main.train_models') }}" method="post">
-                            <button type="submit" class="btn btn-info">Đào tạo mô hình</button>
+                            <button type="submit" class="btn btn-info">Train the models</button>
                         </form>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Quá trình này có thể mất vài phút. Vui lòng kiểm tra logs để biết
-                            trạng thái.</small>
+                        <small class="text-muted">The process may take several minutes. Please check the logs for status updates.</small>
                     </div>
                 </div>
             </div>

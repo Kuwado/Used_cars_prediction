@@ -528,11 +528,11 @@ def predict_price(input_data):
     from flask import current_app
     
     try:
-        # Đường dẫn tới thư mục chứa các mô hình
-        model_folder = r"C:\Users\admin\Documents\GitHub\Used_cars_prediction\src\models"
-        
-        # Load model columns
-        model_columns = joblib.load(os.path.join(model_folder, 'model_columns.pkl'))
+        # Đường dẫn tới thư mục chứa các mô hình 
+        model_folder = "./src/models" 
+
+        # Load model columns 
+        model_columns = joblib.load(os.path.join(model_folder, 'model_columns.pkl')) 
         
         # One-hot encode input
         input_df = pd.DataFrame([input_data])

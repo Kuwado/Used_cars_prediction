@@ -84,20 +84,6 @@ def random_forest_training():
     print(f"R2 of Random Forest: {r2}")
     print(f"Accuracy (100 - MAPE): {accuracy}%")
 
-    # Bảng so sánh
-    # comparison_df = pd.DataFrame(
-    #     {"Actual Price": y_test.values, "Predicted Price": y_pred.flatten()}
-    # )
-    # print(comparison_df.head())
-
-    # Tạo bảng so sánh có cả features
-    # comparison_df = X_test.copy()
-    # comparison_df["Actual Price"] = y_test.values
-    # comparison_df["Predicted Price"] = y_pred.flatten()
-
-    # In ra 5 dòng đầu
-    # print(comparison_df.head())
-
     return {
         "model": "Random Forest",
         "mae": mae,
@@ -106,14 +92,4 @@ def random_forest_training():
         "accuracy": accuracy,
     }
 
-
-# # Biểu đồ
-# plt.figure(figsize=(10, 5))
-# plt.plot(comparison_df["Actual Price"].values[:1000], label="Actual", marker="o")
-# plt.plot(comparison_df["Predicted Price"].values[:1000], label="Predicted", marker="x")
-# plt.title("Actual vs Predicted Car Prices")
-# plt.xlabel("Sample Index")
-# plt.ylabel("Price")
-# plt.legend()
-# plt.grid(True)
-# plt.show()
+random_forest_training()

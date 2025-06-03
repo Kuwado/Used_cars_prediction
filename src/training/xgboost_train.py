@@ -78,3 +78,5 @@ def xgboost_training():
         "r2": r2,
         "accuracy": accuracy,
     }
+
+xgboost_training()

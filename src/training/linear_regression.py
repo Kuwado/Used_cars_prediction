@@ -89,14 +89,6 @@ def linear_regression_training():
     print(f"R²   : {r2}")
     print(f"Accuracy (100 - MAPE): {accuracy}%")
 
-    # Tạo bảng so sánh có cả features
-    # comparison_df = X_test.copy()
-    # comparison_df["Actual Price"] = y_test.flatten()
-    # comparison_df["Predicted Price"] = y_pred.flatten()
-
-    # In ra 5 dòng đầu
-    # print(comparison_df.head())
-
     return {
         "model": "Linear Regression",
         "mae": mae,
@@ -104,3 +96,5 @@ def linear_regression_training():
         "r2": r2,
         "accuracy": accuracy,
     }
+
+linear_regression_training()
